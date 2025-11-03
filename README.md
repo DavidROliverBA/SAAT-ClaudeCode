@@ -25,30 +25,151 @@ SAAT (Software Architecture Analysis Toolkit) provides AI-powered architecture a
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Installation
 
-### Installation (< 1 minute)
+### Prerequisites
+
+Before installing SAAT, ensure you have:
+
+- ✅ **Claude Code** installed and configured ([Download here](https://www.anthropic.com/claude/code))
+- ✅ **Bash shell** (Linux, macOS, or Windows with WSL2/Git Bash)
+- ✅ **Git** (optional, for cloning - or download ZIP from GitHub)
+
+### Quick Install (Recommended)
+
+**Step 1: Get the repository**
 
 ```bash
+# Option A: Clone with Git
+git clone https://github.com/DavidROliverBA/SAAT-ClaudeCode.git
+cd SAAT-ClaudeCode
+
+# Option B: Download and extract ZIP, then:
+cd SAAT-ClaudeCode
+```
+
+**Step 2: Run the installation script**
+
+```bash
+./scripts/install.sh
+```
+
+**What happens during installation:**
+- ✅ Creates `~/.claude/agents/` directory (if it doesn't exist)
+- ✅ Copies all 11 SAAT agents globally
+- ✅ Makes agents available across all your projects
+- ✅ Takes less than 1 minute!
+
+**Step 3: Verify installation**
+
+```bash
+# Check that agents are installed
+ls -1 ~/.claude/agents/saat-*.md
+
+# You should see 11 agent files
+```
+
+### Alternative Installation Methods
+
+<details>
+<summary><b>Manual Installation</b> (click to expand)</summary>
+
+```bash
+# Clone or download repository
+cd SAAT-ClaudeCode
+
+# Create global agents directory
+mkdir -p ~/.claude/agents
+
+# Copy all agents
+cp agents/*.md ~/.claude/agents/
+
+# Verify
+ls -la ~/.claude/agents/saat-*.md
+```
+</details>
+
+<details>
+<summary><b>Project-Specific Installation</b> (click to expand)</summary>
+
+Install to a specific project instead of globally:
+
+```bash
+# Navigate to your project
+cd /path/to/your/project
+
+# Create project agents directory
+mkdir -p .claude/agents
+
+# Copy agents from SAAT repository
+cp /path/to/SAAT-ClaudeCode/agents/*.md .claude/agents/
+
+# Agents now available only in this project
+```
+
+**Note:** Project-level agents take precedence over global agents.
+</details>
+
+<details>
+<summary><b>Windows (PowerShell) Installation</b> (click to expand)</summary>
+
+```powershell
 # Clone repository
 git clone https://github.com/DavidROliverBA/SAAT-ClaudeCode.git
 cd SAAT-ClaudeCode
 
-# Install globally
-./scripts/install.sh
+# Create agents directory
+New-Item -Path "$env:USERPROFILE\.claude\agents" -ItemType Directory -Force
+
+# Copy agents
+Copy-Item -Path "agents\*.md" -Destination "$env:USERPROFILE\.claude\agents\"
+
+# Verify
+Get-ChildItem "$env:USERPROFILE\.claude\agents\saat-*.md"
 ```
+</details>
 
 ### First Use
 
 Open **Claude Code** and invoke your first agent:
 
+**Method 1: Guided Experience (Recommended for beginners)**
 ```
-Task tool:
+In Claude Code, use the Task tool:
   subagent_type: "saat-orchestrate"
   prompt: "I want to analyze my e-commerce platform for security and performance"
 ```
 
+**Method 2: Get Help**
+```
+Task tool:
+  subagent_type: "saat-help"
+  prompt: "Show me all available SAAT commands"
+```
+
+**Method 3: Quick Full Analysis**
+```
+Task tool:
+  subagent_type: "saat-full-pipeline"
+  prompt: "Analyze /path/to/my/project"
+```
+
 The orchestrator will guide you through a personalized analysis workflow!
+
+### Troubleshooting Installation
+
+**Issue:** Script says "permission denied"
+```bash
+chmod +x scripts/install.sh
+./scripts/install.sh
+```
+
+**Issue:** Agents not showing in Claude Code
+- Restart Claude Code after installation
+- Verify files exist: `ls ~/.claude/agents/saat-*.md`
+- Check file permissions: `chmod 644 ~/.claude/agents/saat-*.md`
+
+**For more help:** See [INSTALLATION.md](./INSTALLATION.md) for comprehensive troubleshooting.
 
 ---
 
@@ -271,6 +392,41 @@ SAAT-ClaudeCode/
 ├── INSTALLATION.md                 # Installation guide
 ├── AGENTS_GUIDE.md                 # Complete agents reference
 └── README.md                       # This file
+```
+
+---
+
+## 🗑️ Uninstallation
+
+If you need to remove SAAT agents:
+
+### Automated Uninstallation
+
+```bash
+cd SAAT-ClaudeCode
+./scripts/uninstall.sh
+```
+
+The script will:
+- List all SAAT agents to be removed
+- Ask for confirmation
+- Remove all agents from `~/.claude/agents/`
+
+### Manual Uninstallation
+
+```bash
+# Remove all SAAT agents
+rm ~/.claude/agents/saat-*.md
+
+# Or remove specific agent
+rm ~/.claude/agents/saat-orchestrator.md
+```
+
+### Verify Removal
+
+```bash
+ls ~/.claude/agents/saat-*.md
+# Should return: No such file or directory
 ```
 
 ---
