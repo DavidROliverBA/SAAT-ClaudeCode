@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# SAAT Claude Code Sub-Agents Global Installation Script
-# Installs SAAT agents globally to ~/.claude/agents/
+# SAAT Claude Code Slash Commands Global Installation Script
+# Installs SAAT commands globally to ~/.claude/commands/
+# Makes all SAAT agents available as slash commands in any Claude Code session
 
 set -e  # Exit on error
 
@@ -39,7 +40,7 @@ print_header() {
 
 # Main installation
 main() {
-    print_header "SAAT Claude Code Sub-Agents - Global Installation"
+    print_header "SAAT Claude Code Slash Commands - Global Installation"
 
     # Check if running from correct directory
     if [ ! -d "agents" ]; then
@@ -53,25 +54,25 @@ main() {
     print_info "Found ${AGENT_COUNT} SAAT agents to install"
     echo ""
 
-    # Create global agents directory if it doesn't exist
-    GLOBAL_AGENTS_DIR="$HOME/.claude/agents"
+    # Create global commands directory if it doesn't exist
+    GLOBAL_COMMANDS_DIR="$HOME/.claude/commands"
 
-    if [ ! -d "$GLOBAL_AGENTS_DIR" ]; then
-        print_info "Creating global agents directory: ${GLOBAL_AGENTS_DIR}"
-        mkdir -p "$GLOBAL_AGENTS_DIR"
+    if [ ! -d "$GLOBAL_COMMANDS_DIR" ]; then
+        print_info "Creating global commands directory: ${GLOBAL_COMMANDS_DIR}"
+        mkdir -p "$GLOBAL_COMMANDS_DIR"
         print_success "Directory created"
     else
-        print_info "Global agents directory exists: ${GLOBAL_AGENTS_DIR}"
+        print_info "Global commands directory exists: ${GLOBAL_COMMANDS_DIR}"
     fi
     echo ""
 
-    # Check for existing SAAT agents and prompt for overwrite
-    EXISTING_AGENTS=$(find "$GLOBAL_AGENTS_DIR" -name "saat-*.md" -type f 2>/dev/null | wc -l)
+    # Check for existing SAAT commands and prompt for overwrite
+    EXISTING_COMMANDS=$(find "$GLOBAL_COMMANDS_DIR" -name "saat-*.md" -type f 2>/dev/null | wc -l)
 
-    if [ "$EXISTING_AGENTS" -gt 0 ]; then
-        print_warning "Found ${EXISTING_AGENTS} existing SAAT agents in ${GLOBAL_AGENTS_DIR}"
+    if [ "$EXISTING_COMMANDS" -gt 0 ]; then
+        print_warning "Found ${EXISTING_COMMANDS} existing SAAT commands in ${GLOBAL_COMMANDS_DIR}"
         echo ""
-        read -p "Do you want to overwrite existing agents? (y/N): " -n 1 -r
+        read -p "Do you want to overwrite existing commands? (y/N): " -n 1 -r
         echo ""
 
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -81,8 +82,8 @@ main() {
         echo ""
     fi
 
-    # Install agents
-    print_header "Installing SAAT Agents"
+    # Install commands
+    print_header "Installing SAAT Commands"
 
     INSTALLED=0
     FAILED=0
@@ -90,8 +91,8 @@ main() {
     for agent_file in agents/*.md; do
         agent_name=$(basename "$agent_file")
 
-        # Copy agent to global directory
-        if cp "$agent_file" "$GLOBAL_AGENTS_DIR/$agent_name"; then
+        # Copy agent to global commands directory
+        if cp "$agent_file" "$GLOBAL_COMMANDS_DIR/$agent_name"; then
             print_success "Installed: ${agent_name}"
             ((INSTALLED++))
         else
@@ -104,46 +105,48 @@ main() {
     print_header "Installation Summary"
 
     if [ $FAILED -eq 0 ]; then
-        print_success "All ${INSTALLED} agents installed successfully!"
+        print_success "All ${INSTALLED} commands installed successfully!"
     else
-        print_warning "${INSTALLED} agents installed, ${FAILED} failed"
+        print_warning "${INSTALLED} commands installed, ${FAILED} failed"
     fi
 
     echo ""
-    print_info "Agents installed to: ${GLOBAL_AGENTS_DIR}"
+    print_info "Commands installed to: ${GLOBAL_COMMANDS_DIR}"
     echo ""
 
-    # List installed agents
-    print_header "Installed SAAT Agents"
+    # List installed commands
+    print_header "Installed SAAT Commands"
     echo ""
 
-    echo "  1. saat-orchestrate.md         - AI architecture consultant (START HERE)"
-    echo "  2. saat-discover.md            - Analyze existing codebases"
-    echo "  3. saat-requirements.md        - Extract requirements from documents"
-    echo "  4. saat-generate.md            - Create C4 architecture models"
-    echo "  5. saat-analyze-characteristics.md - Evaluate architecture quality"
-    echo "  6. saat-validate.md            - Validate model correctness"
-    echo "  7. saat-security.md            - Security analysis"
-    echo "  8. saat-document.md            - Generate documentation"
-    echo "  9. saat-terraform.md           - Generate Terraform IaC"
-    echo " 10. saat-full-pipeline.md       - Complete analysis workflow"
-    echo " 11. saat-help.md                - Help and guidance"
+    echo "  1. /saat-orchestrator          - AI architecture consultant (START HERE)"
+    echo "  2. /saat-discover              - Analyze existing codebases"
+    echo "  3. /saat-requirements          - Extract requirements from documents"
+    echo "  4. /saat-generate              - Create C4 architecture models"
+    echo "  5. /saat-analyze-characteristics - Evaluate architecture quality"
+    echo "  6. /saat-validate              - Validate model correctness"
+    echo "  7. /saat-security              - Security analysis"
+    echo "  8. /saat-document              - Generate documentation"
+    echo "  9. /saat-terraform             - Generate Terraform IaC"
+    echo " 10. /saat-full-pipeline         - Complete analysis workflow"
+    echo " 11. /saat-help                  - Help and guidance"
 
     echo ""
     print_header "Next Steps"
     echo ""
-    print_info "Open Claude Code and use the Task tool to invoke agents:"
+    print_info "Open Claude Code and use slash commands directly:"
     echo ""
     echo "  Example 1 - Guided experience:"
-    echo "    Task(subagent_type=\"saat-orchestrate\", prompt=\"I want to analyze my e-commerce platform\")"
+    echo "    /saat-orchestrator"
     echo ""
     echo "  Example 2 - Full pipeline:"
-    echo "    Task(subagent_type=\"saat-full-pipeline\", prompt=\"Analyze /path/to/repo\")"
+    echo "    /saat-full-pipeline"
     echo ""
     echo "  Example 3 - Discover codebase:"
-    echo "    Task(subagent_type=\"saat-discover\", prompt=\"Analyze repository at /path/to/repo\")"
+    echo "    /saat-discover"
     echo ""
-    print_info "For help, invoke the saat-help agent"
+    print_info "For help, type: /saat-help"
+    echo ""
+    print_info "Commands are now globally available in all Claude Code sessions!"
     echo ""
     print_success "Installation complete! Happy architecting! 🎉"
     echo ""
