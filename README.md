@@ -2,10 +2,11 @@
 
 **Solution Architects Analysis Toolkit for Claude Code**
 
-A comprehensive suite of 11 specialized AI sub-agents that provide professional-grade software architecture analysis, design, validation, security assessment, documentation, and infrastructure generation.
+A comprehensive suite of 15 specialized AI sub-agents that provide professional-grade software architecture analysis, design, validation, security assessment, documentation, infrastructure generation, cost estimation, migration planning, performance modeling, and dependency analysis.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Claude-Code-blue.svg)](https://www.anthropic.com/claude/code)
+[![Version](https://img.shields.io/badge/version-1.1-brightgreen.svg)](https://github.com/DavidROliverBA/SAAT-ClaudeCode)
 
 ---
 
@@ -20,7 +21,11 @@ SAAT (Solution Architects Analysis Toolkit) provides AI-powered architecture ana
 - ✅ **Validate** models for correctness and compliance
 - 🔒 **Audit** security and identify vulnerabilities
 - 📚 **Document** architecture with diagrams and ADRs
-- 🏗️ **Generate** production-ready Terraform infrastructure
+- ☁️ **Generate** production-ready Terraform infrastructure
+- 💰 **Estimate** cloud infrastructure costs and TCO
+- 🔄 **Plan** migrations with phased roadmaps
+- ⚡ **Model** performance and identify bottlenecks
+- 📦 **Analyze** dependencies and scan for vulnerabilities
 - 🎯 **Orchestrate** complete workflows tailored to your needs
 
 ---
@@ -56,7 +61,7 @@ cd SAAT-ClaudeCode
 
 **What happens during installation:**
 - ✅ Creates `~/.claude/agents/` directory (if it doesn't exist)
-- ✅ Copies all 11 SAAT agents globally
+- ✅ Copies all 15 SAAT agents globally
 - ✅ Makes agents available across all your projects
 - ✅ Takes less than 1 minute!
 
@@ -66,7 +71,7 @@ cd SAAT-ClaudeCode
 # Check that agents are installed
 ls -1 ~/.claude/agents/saat-*.md
 
-# You should see 11 agent files
+# You should see 15 agent files
 ```
 
 ### Alternative Installation Methods
@@ -175,14 +180,18 @@ chmod +x scripts/install.sh
 
 ## 🌐 Web Dashboard
 
-SAAT includes a modern web-based dashboard for managing projects, running agents, and visualizing results.
+SAAT includes a modern, production-ready web-based dashboard for managing projects, running agents, and visualizing results.
 
 ### Features
 
 - **📁 Project Management**: Add local folders or clone GitHub repositories
-- **🤖 Agent Browser**: Explore all 11 SAAT agents with detailed descriptions
+- **🤖 Agent Browser**: Explore all 15 SAAT agents with detailed descriptions
 - **⚡ Real-time Execution**: Run agents with live progress updates via WebSocket
-- **📊 Results Visualization**: View analysis results and statistics
+- **📊 Results Visualization**: Architecture scores, security findings, validation results
+- **📂 File Explorer**: Browse project files with collapsible tree view
+- **🎯 Agent Execution**: Run agents directly from UI with custom prompts
+- **📜 Analysis History**: View past analyses with status tracking
+- **💾 Export**: Download results as JSON or Markdown
 - **🔍 Search & Filter**: Quickly find projects and agents
 
 ### Quick Start
@@ -209,7 +218,9 @@ npm run dev
 
 ## 📦 What's Included
 
-### 11 Specialized Sub-Agents
+### 15 Specialized Sub-Agents
+
+#### Core Agents (11)
 
 | Agent | Purpose | Use Case |
 |-------|---------|----------|
@@ -224,6 +235,15 @@ npm run dev
 | **saat-terraform** | Generate infrastructure | Infrastructure as Code |
 | **saat-full-pipeline** | Complete workflow | One-command analysis |
 | **saat-help** | Help & guidance | Reference documentation |
+
+#### Advanced Agents (4)
+
+| Agent | Purpose | Use Case |
+|-------|---------|----------|
+| **saat-cost-estimate** | Cloud cost estimation | Budget planning, TCO analysis |
+| **saat-migration-analyze** | Migration planning | Cloud migration, modernization |
+| **saat-performance-model** | Performance analysis | SLA validation, bottleneck detection |
+| **saat-dependencies** | Dependency analysis | CVE scanning, license compliance |
 
 ---
 
@@ -288,7 +308,9 @@ SAAT evaluates **14 standard architecture characteristics** based on Mark Richar
 
 ## 🏗️ Complete Feature Set
 
-### 🤖 11 Specialized Agents
+### 🤖 15 Specialized Agents
+
+#### Core Agents (11)
 - **saat-orchestrator** - AI-powered guidance and workflow orchestration
 - **saat-discover** - Automated codebase analysis and pattern detection
 - **saat-requirements** - Intelligent requirements extraction
@@ -300,6 +322,12 @@ SAAT evaluates **14 standard architecture characteristics** based on Mark Richar
 - **saat-terraform** - Multi-cloud infrastructure as code
 - **saat-full-pipeline** - Complete workflow automation
 - **saat-help** - Interactive help and reference system
+
+#### Advanced Agents (4)
+- **saat-cost-estimate** - Cloud infrastructure cost estimation with TCO analysis
+- **saat-migration-analyze** - Migration complexity assessment and roadmap generation
+- **saat-performance-model** - Performance predictions and bottleneck identification
+- **saat-dependencies** - Dependency analysis with CVE scanning and license compliance
 
 ### 📚 Comprehensive Examples
 - **5 Domain-Specific Characteristics**: E-commerce, Healthcare, Fintech, SaaS, Microservices
@@ -321,12 +349,16 @@ SAAT evaluates **14 standard architecture characteristics** based on Mark Richar
   - Zero trust architecture
   - PHI protection strategies
 
-### 🌐 Web Dashboard (Beta)
+### 🌐 Web Dashboard (v1.0 Production Ready)
 - **Project Management**: Local folders and GitHub repositories
-- **Agent Browser**: Explore and execute all 11 agents
-- **Real-time Updates**: WebSocket-based progress tracking
-- **Analysis Visualization**: View results and statistics
-- **RESTful API**: Complete backend for automation
+- **Agent Browser**: Explore and execute all 15 agents
+- **Real-time Execution**: WebSocket-based progress tracking with live updates
+- **File Explorer**: Browse project files with collapsible tree view navigation
+- **Agent Runner**: Execute agents directly from UI with custom prompts
+- **Results Visualization**: Architecture scores, security findings, validation results
+- **Analysis History**: Track all past analyses with status badges
+- **Export Functionality**: Download results as JSON or Markdown
+- **RESTful API**: Complete backend for automation and integration
 
 ### 🛠️ Developer Tools
 - **Badge Generator**: Create shields.io badges from analysis results
@@ -455,7 +487,7 @@ Task(subagent_type="saat-document", prompt="Generate complete documentation")
 
 ```
 SAAT-ClaudeCode/
-├── agents/                              # 11 specialized sub-agents
+├── agents/                              # 15 specialized sub-agents
 │   ├── saat-orchestrator.md            # AI architecture consultant
 │   ├── saat-discover.md                # Codebase analysis
 │   ├── saat-requirements.md            # Requirements extraction
@@ -466,7 +498,11 @@ SAAT-ClaudeCode/
 │   ├── saat-document.md                # Documentation generation
 │   ├── saat-terraform.md               # Infrastructure generation
 │   ├── saat-full-pipeline.md           # Complete workflow
-│   └── saat-help.md                    # Help system
+│   ├── saat-help.md                    # Help system
+│   ├── saat-cost-estimate.md           # Cost estimation (NEW)
+│   ├── saat-migration-analyze.md       # Migration planning (NEW)
+│   ├── saat-performance-model.md       # Performance modeling (NEW)
+│   └── saat-dependencies.md            # Dependency analysis (NEW)
 │
 ├── scripts/                             # Automation scripts
 │   ├── install.sh                      # Install agents globally
@@ -504,7 +540,7 @@ SAAT-ClaudeCode/
 │   │   └── WALKTHROUGH.md              # 8-hour guide
 │   └── README.md                       # Reference guide
 │
-├── dashboard/                           # Web dashboard (Beta)
+├── dashboard/                           # Web dashboard (v1.0)
 │   ├── backend/                        # Node.js/Express API
 │   │   ├── src/
 │   │   │   ├── server.js
@@ -514,6 +550,10 @@ SAAT-ClaudeCode/
 │   │   ├── src/
 │   │   │   ├── components/
 │   │   │   ├── pages/
+│   │   │   │   ├── ProjectDetail.jsx  # Project detail with file explorer
+│   │   │   │   ├── ProjectDetail.css
+│   │   │   │   ├── Analysis.jsx       # Results visualization
+│   │   │   │   └── Analysis.css
 │   │   │   └── context/
 │   │   └── package.json
 │   └── README.md                       # Dashboard docs
