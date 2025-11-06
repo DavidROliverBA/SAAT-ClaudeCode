@@ -173,6 +173,40 @@ chmod +x scripts/install.sh
 
 ---
 
+## 🌐 Web Dashboard
+
+SAAT includes a modern web-based dashboard for managing projects, running agents, and visualizing results.
+
+### Features
+
+- **📁 Project Management**: Add local folders or clone GitHub repositories
+- **🤖 Agent Browser**: Explore all 11 SAAT agents with detailed descriptions
+- **⚡ Real-time Execution**: Run agents with live progress updates via WebSocket
+- **📊 Results Visualization**: View analysis results and statistics
+- **🔍 Search & Filter**: Quickly find projects and agents
+
+### Quick Start
+
+```bash
+# Install dependencies
+cd dashboard/backend && npm install
+cd ../frontend && npm install
+
+# Start backend (Terminal 1)
+cd dashboard/backend
+npm run dev
+
+# Start frontend (Terminal 2)
+cd dashboard/frontend
+npm run dev
+
+# Open http://localhost:3000
+```
+
+**Full documentation:** [dashboard/README.md](./dashboard/README.md)
+
+---
+
 ## 📦 What's Included
 
 ### 11 Specialized Sub-Agents
