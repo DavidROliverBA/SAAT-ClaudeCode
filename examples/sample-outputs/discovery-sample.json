@@ -1,0 +1,413 @@
+{
+  "projectName": "ecommerce-platform",
+  "discoveryDate": "2025-11-06T20:45:00Z",
+  "repositoryPath": "/projects/ecommerce-platform",
+  "scanDepth": 3,
+  "statistics": {
+    "totalFiles": 1523,
+    "totalDirectories": 245,
+    "linesOfCode": 152340,
+    "testFiles": 287,
+    "configFiles": 45
+  },
+  "technologies": {
+    "languages": [
+      {
+        "name": "TypeScript",
+        "fileCount": 456,
+        "linesOfCode": 78234,
+        "percentage": 51.4,
+        "confidence": 100
+      },
+      {
+        "name": "JavaScript",
+        "fileCount": 189,
+        "linesOfCode": 23456,
+        "percentage": 15.4,
+        "confidence": 100
+      },
+      {
+        "name": "Python",
+        "fileCount": 87,
+        "linesOfCode": 12890,
+        "percentage": 8.5,
+        "confidence": 100
+      },
+      {
+        "name": "SQL",
+        "fileCount": 45,
+        "linesOfCode": 5640,
+        "percentage": 3.7,
+        "confidence": 95
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "React",
+        "version": "18.2.0",
+        "confidence": 100,
+        "evidence": ["package.json dependency", "JSX usage", "React hooks"]
+      },
+      {
+        "name": "Express",
+        "version": "4.18.2",
+        "confidence": 100,
+        "evidence": ["package.json dependency", "app.listen() calls", "middleware usage"]
+      },
+      {
+        "name": "FastAPI",
+        "version": "0.104.1",
+        "confidence": 95,
+        "evidence": ["requirements.txt", "@app.get() decorators"]
+      },
+      {
+        "name": "Redux",
+        "version": "4.2.1",
+        "confidence": 100,
+        "evidence": ["createStore usage", "reducers directory"]
+      }
+    ],
+    "databases": [
+      {
+        "name": "PostgreSQL",
+        "version": "14",
+        "confidence": 95,
+        "evidence": ["pg driver in package.json", "connection strings in configs", "migration files"]
+      },
+      {
+        "name": "Redis",
+        "version": "7.0",
+        "confidence": 90,
+        "evidence": ["redis client in package.json", "REDIS_URL in configs"]
+      },
+      {
+        "name": "Elasticsearch",
+        "version": "8.x",
+        "confidence": 85,
+        "evidence": ["@elastic/elasticsearch in package.json"]
+      }
+    ],
+    "cloudServices": [
+      {
+        "name": "AWS S3",
+        "confidence": 95,
+        "evidence": ["aws-sdk usage", "S3 bucket references in code"]
+      },
+      {
+        "name": "AWS Lambda",
+        "confidence": 90,
+        "evidence": ["serverless.yml configuration", "lambda handler functions"]
+      },
+      {
+        "name": "Stripe",
+        "confidence": 100,
+        "evidence": ["stripe npm package", "payment processing code"]
+      },
+      {
+        "name": "SendGrid",
+        "confidence": 95,
+        "evidence": ["@sendgrid/mail package", "email templates"]
+      }
+    ],
+    "infrastructure": [
+      {
+        "name": "Docker",
+        "confidence": 100,
+        "evidence": ["Dockerfile", "docker-compose.yml"]
+      },
+      {
+        "name": "Kubernetes",
+        "confidence": 95,
+        "evidence": ["k8s/ directory with yaml configs", "deployment manifests"]
+      },
+      {
+        "name": "Terraform",
+        "confidence": 90,
+        "evidence": ["*.tf files", "terraform/ directory"]
+      },
+      {
+        "name": "GitHub Actions",
+        "confidence": 100,
+        "evidence": [".github/workflows/*.yml files"]
+      }
+    ]
+  },
+  "architecturePatterns": [
+    {
+      "pattern": "Microservices",
+      "confidence": 85,
+      "evidence": [
+        "Multiple service directories (services/user, services/payment, services/order)",
+        "Each service has own package.json",
+        "Docker Compose with 6 services",
+        "Kubernetes deployments for each service",
+        "Service mesh configuration (Istio)"
+      ],
+      "details": {
+        "serviceCount": 6,
+        "avgServiceSize": "12K LOC"
+      }
+    },
+    {
+      "pattern": "Event-Driven",
+      "confidence": 75,
+      "evidence": [
+        "Kafka client configuration",
+        "Event handlers in services",
+        "Message queue (RabbitMQ) setup",
+        "Event schemas in events/ directory"
+      ]
+    },
+    {
+      "pattern": "RESTful API",
+      "confidence": 100,
+      "evidence": [
+        "Express router definitions",
+        "OpenAPI/Swagger specification",
+        "REST endpoint controllers",
+        "HTTP verbs (GET, POST, PUT, DELETE) usage"
+      ]
+    },
+    {
+      "pattern": "Layered Architecture",
+      "confidence": 90,
+      "evidence": [
+        "controllers/ directory",
+        "services/ directory",
+        "repositories/ directory",
+        "models/ directory",
+        "Clear separation of concerns"
+      ]
+    }
+  ],
+  "services": [
+    {
+      "name": "user-service",
+      "type": "REST API",
+      "language": "TypeScript",
+      "framework": "Express",
+      "entryPoint": "services/user/src/index.ts",
+      "port": 3001,
+      "endpoints": [
+        "POST /users",
+        "GET /users/:id",
+        "PUT /users/:id",
+        "DELETE /users/:id",
+        "POST /auth/login",
+        "POST /auth/register"
+      ],
+      "dependencies": [
+        "PostgreSQL (user database)",
+        "Redis (session storage)",
+        "SendGrid (email notifications)"
+      ],
+      "confidence": 95,
+      "linesOfCode": 8945
+    },
+    {
+      "name": "payment-service",
+      "type": "REST API",
+      "language": "TypeScript",
+      "framework": "Express",
+      "entryPoint": "services/payment/src/index.ts",
+      "port": 3002,
+      "endpoints": [
+        "POST /payments",
+        "GET /payments/:id",
+        "POST /refunds",
+        "POST /webhooks/stripe"
+      ],
+      "dependencies": [
+        "PostgreSQL (payment records)",
+        "Stripe API (payment processing)",
+        "Kafka (payment events)"
+      ],
+      "confidence": 95,
+      "linesOfCode": 5670,
+      "securityNotes": [
+        "Handles sensitive payment data",
+        "PCI-DSS compliance required"
+      ]
+    },
+    {
+      "name": "order-service",
+      "type": "REST API",
+      "language": "TypeScript",
+      "framework": "Express",
+      "entryPoint": "services/order/src/index.ts",
+      "port": 3003,
+      "endpoints": [
+        "POST /orders",
+        "GET /orders/:id",
+        "PUT /orders/:id/status",
+        "GET /users/:userId/orders"
+      ],
+      "dependencies": [
+        "PostgreSQL (order database)",
+        "Redis (order cache)",
+        "Kafka (order events)",
+        "inventory-service",
+        "payment-service"
+      ],
+      "confidence": 90,
+      "linesOfCode": 7234
+    },
+    {
+      "name": "inventory-service",
+      "type": "REST API",
+      "language": "Python",
+      "framework": "FastAPI",
+      "entryPoint": "services/inventory/main.py",
+      "port": 8001,
+      "endpoints": [
+        "GET /products",
+        "GET /products/:id",
+        "PUT /products/:id/stock",
+        "POST /products/:id/reserve"
+      ],
+      "dependencies": [
+        "PostgreSQL (inventory database)",
+        "Elasticsearch (product search)",
+        "Kafka (inventory events)"
+      ],
+      "confidence": 85,
+      "linesOfCode": 4567
+    },
+    {
+      "name": "notification-service",
+      "type": "Event Consumer",
+      "language": "TypeScript",
+      "framework": "Node.js",
+      "entryPoint": "services/notification/src/worker.ts",
+      "dependencies": [
+        "Kafka (event source)",
+        "SendGrid (email)",
+        "Twilio (SMS)",
+        "Firebase (push notifications)"
+      ],
+      "confidence": 90,
+      "linesOfCode": 3456
+    },
+    {
+      "name": "web-app",
+      "type": "Single Page Application",
+      "language": "TypeScript",
+      "framework": "React",
+      "entryPoint": "apps/web/src/index.tsx",
+      "dependencies": [
+        "API Gateway",
+        "Redux (state management)",
+        "React Router (routing)"
+      ],
+      "confidence": 100,
+      "linesOfCode": 15678,
+      "buildTool": "Webpack"
+    }
+  ],
+  "externalDependencies": [
+    {
+      "name": "Stripe",
+      "type": "Payment Gateway",
+      "purpose": "Payment processing",
+      "criticality": "CS1"
+    },
+    {
+      "name": "SendGrid",
+      "type": "Email Service",
+      "purpose": "Transactional emails",
+      "criticality": "CS2"
+    },
+    {
+      "name": "AWS S3",
+      "type": "Object Storage",
+      "purpose": "Product images, user uploads",
+      "criticality": "SL1"
+    },
+    {
+      "name": "Twilio",
+      "type": "SMS Service",
+      "purpose": "SMS notifications",
+      "criticality": "SL2"
+    }
+  ],
+  "dataStores": [
+    {
+      "type": "PostgreSQL",
+      "name": "Main Database",
+      "databases": [
+        "user_db",
+        "payment_db",
+        "order_db",
+        "inventory_db"
+      ],
+      "confidence": 95
+    },
+    {
+      "type": "Redis",
+      "name": "Cache & Sessions",
+      "purpose": ["Session storage", "API caching", "Rate limiting"],
+      "confidence": 90
+    },
+    {
+      "type": "Elasticsearch",
+      "name": "Search Engine",
+      "purpose": ["Product search", "Log aggregation"],
+      "confidence": 85
+    }
+  ],
+  "securityFindings": {
+    "preliminary": [
+      "No .env files in repository (good practice)",
+      "Secrets referenced via environment variables",
+      "HTTPS enforced in production configs",
+      "JWT tokens used for authentication",
+      "Some API endpoints may lack authentication (requires validation)"
+    ]
+  },
+  "devOps": {
+    "cicd": {
+      "platform": "GitHub Actions",
+      "pipelines": [
+        "CI: lint, test, build on every PR",
+        "CD: deploy to staging on merge to main",
+        "CD: deploy to production on tag"
+      ]
+    },
+    "containerization": {
+      "tool": "Docker",
+      "orchestration": "Kubernetes (EKS)",
+      "servicesContainerized": 6
+    },
+    "monitoring": {
+      "tools": ["Prometheus", "Grafana", "Datadog"],
+      "evidence": ["prometheus.yml", "grafana dashboards", "datadog agent config"]
+    }
+  },
+  "testingCoverage": {
+    "unitTests": {
+      "files": 156,
+      "estimatedCoverage": "65%",
+      "framework": "Jest"
+    },
+    "integrationTests": {
+      "files": 45,
+      "framework": "Jest + Supertest"
+    },
+    "e2eTests": {
+      "files": 23,
+      "framework": "Cypress"
+    }
+  },
+  "recommendations": [
+    "Document API contracts between services (OpenAPI/Swagger)",
+    "Implement distributed tracing (Jaeger or OpenTelemetry)",
+    "Add service mesh for better observability and security (Istio)",
+    "Increase test coverage (target 80%)",
+    "Add API rate limiting and authentication middleware",
+    "Implement circuit breakers for external service calls",
+    "Add database migration tooling (Flyway or Liquibase)",
+    "Document architecture decisions (ADRs)",
+    "Add API versioning strategy",
+    "Implement chaos engineering practices"
+  ]
+}

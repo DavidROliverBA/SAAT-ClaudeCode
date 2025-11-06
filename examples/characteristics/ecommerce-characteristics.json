@@ -1,0 +1,225 @@
+{
+  "projectName": "E-Commerce Platform",
+  "domain": "E-Commerce",
+  "description": "Online retail platform with high traffic, payment processing, and inventory management",
+  "characteristics": [
+    {
+      "name": "Availability",
+      "importance": 10,
+      "target": 99.9,
+      "targetDescription": "99.9% uptime (43 minutes downtime/month max)",
+      "reason": "Revenue loss during downtime - $10K per minute during peak hours",
+      "measurements": [
+        "Monthly uptime percentage",
+        "Mean time between failures (MTBF)",
+        "Mean time to recovery (MTTR)"
+      ]
+    },
+    {
+      "name": "Performance",
+      "importance": 9,
+      "target": "95th percentile < 200ms, 99th percentile < 500ms",
+      "targetDescription": "Page load under 2 seconds, API response under 200ms (p95)",
+      "reason": "User experience directly impacts conversion rate - 100ms delay = 1% revenue loss",
+      "measurements": [
+        "API response times (p50, p95, p99)",
+        "Page load time",
+        "Time to interactive (TTI)",
+        "Database query performance"
+      ]
+    },
+    {
+      "name": "Scalability",
+      "importance": 9,
+      "target": "Handle 10x traffic during Black Friday/Cyber Monday",
+      "targetDescription": "Scale from 10K to 100K concurrent users",
+      "reason": "Black Friday generates 60% of annual revenue",
+      "measurements": [
+        "Concurrent user capacity",
+        "Requests per second (RPS)",
+        "Auto-scaling response time",
+        "Resource utilization"
+      ]
+    },
+    {
+      "name": "Security",
+      "importance": 10,
+      "target": "PCI-DSS Level 1 compliance, OWASP Top 10 mitigated",
+      "targetDescription": "Zero security vulnerabilities, full encryption, secure authentication",
+      "reason": "Payment processing requires PCI-DSS compliance - penalties up to $500K/month",
+      "measurements": [
+        "Security audit score",
+        "Vulnerability scan results",
+        "Penetration test findings",
+        "PCI-DSS compliance score"
+      ]
+    },
+    {
+      "name": "Reliability",
+      "importance": 8,
+      "target": "Error rate < 0.1%, no data loss",
+      "targetDescription": "99.9% successful transactions, zero payment failures",
+      "reason": "Payment failures cause customer churn and support costs",
+      "measurements": [
+        "Transaction success rate",
+        "Error rate by service",
+        "Data consistency checks",
+        "Failed payment recovery"
+      ]
+    },
+    {
+      "name": "Fault Tolerance",
+      "importance": 8,
+      "target": "Graceful degradation, no single points of failure",
+      "targetDescription": "Continue operating with degraded functionality during failures",
+      "reason": "Single service failure should not impact entire platform",
+      "measurements": [
+        "Circuit breaker activations",
+        "Fallback invocations",
+        "Service dependency health",
+        "Cascading failure prevention"
+      ]
+    },
+    {
+      "name": "Recoverability",
+      "importance": 7,
+      "target": "RTO < 15 minutes, RPO < 5 minutes",
+      "targetDescription": "Restore service within 15 minutes, lose max 5 minutes of data",
+      "reason": "Extended downtime impacts revenue and reputation",
+      "measurements": [
+        "Backup frequency",
+        "Restore time testing",
+        "Disaster recovery drills",
+        "Data replication lag"
+      ]
+    },
+    {
+      "name": "Maintainability",
+      "importance": 6,
+      "target": "Code quality score > 80%, technical debt < 10%",
+      "targetDescription": "Clean code, comprehensive documentation, low coupling",
+      "reason": "Fast feature delivery requires maintainable codebase",
+      "measurements": [
+        "Code quality metrics (SonarQube)",
+        "Code coverage percentage",
+        "Documentation coverage",
+        "Technical debt ratio"
+      ]
+    },
+    {
+      "name": "Testability",
+      "importance": 7,
+      "target": "80% code coverage, automated test suite < 10 minutes",
+      "targetDescription": "Comprehensive unit, integration, and E2E tests",
+      "reason": "Fast, confident deployments require good test coverage",
+      "measurements": [
+        "Unit test coverage",
+        "Integration test coverage",
+        "E2E test coverage",
+        "Test execution time"
+      ]
+    },
+    {
+      "name": "Deployability",
+      "importance": 7,
+      "target": "Deploy to production 5x per day, zero-downtime deployments",
+      "targetDescription": "Fully automated CI/CD, blue-green deployments",
+      "reason": "Fast time-to-market requires frequent, safe deployments",
+      "measurements": [
+        "Deployment frequency",
+        "Deployment success rate",
+        "Rollback time",
+        "Lead time for changes"
+      ]
+    },
+    {
+      "name": "Configurability",
+      "importance": 5,
+      "target": "Feature flags for all major features, runtime config changes",
+      "targetDescription": "Change configuration without redeployment",
+      "reason": "A/B testing and gradual rollouts require runtime configuration",
+      "measurements": [
+        "Feature flag coverage",
+        "Config change time",
+        "Environment parity",
+        "Dynamic configuration usage"
+      ]
+    },
+    {
+      "name": "Extensibility",
+      "importance": 6,
+      "target": "Plugin architecture for payment providers and shipping carriers",
+      "targetDescription": "Add new integrations without core changes",
+      "reason": "Business growth requires easy integration of new partners",
+      "measurements": [
+        "Plugin development time",
+        "API versioning compliance",
+        "Third-party integrations count",
+        "Extension point coverage"
+      ]
+    },
+    {
+      "name": "Interoperability",
+      "importance": 7,
+      "target": "RESTful APIs, standard data formats (JSON), webhook support",
+      "targetDescription": "Integrate with 20+ third-party services (payment, shipping, analytics)",
+      "reason": "E-commerce requires many integrations (Stripe, PayPal, ShipStation, etc.)",
+      "measurements": [
+        "API compliance score",
+        "Integration success rate",
+        "Data format standards adherence",
+        "Third-party compatibility"
+      ]
+    },
+    {
+      "name": "Usability",
+      "importance": 8,
+      "target": "Conversion rate > 3%, cart abandonment < 70%",
+      "targetDescription": "Intuitive checkout flow, mobile-optimized, accessible (WCAG 2.1 AA)",
+      "reason": "User experience directly impacts revenue",
+      "measurements": [
+        "Conversion rate",
+        "Cart abandonment rate",
+        "User satisfaction score (NPS)",
+        "Accessibility audit score"
+      ]
+    }
+  ],
+  "businessContext": {
+    "industry": "E-Commerce / Retail",
+    "userBase": "100,000+ active customers",
+    "transactionVolume": "50,000 orders/day",
+    "peakTraffic": "500,000 concurrent users (Black Friday)",
+    "geographicScope": "North America, expanding to Europe",
+    "regulatoryRequirements": ["PCI-DSS Level 1", "GDPR", "CCPA"]
+  },
+  "technicalConstraints": {
+    "cloudProvider": "AWS",
+    "budget": "$50K/month infrastructure",
+    "team": "15 engineers (3 teams)",
+    "deploymentFrequency": "Multiple times per day",
+    "existingTech": ["Node.js", "React", "PostgreSQL", "Redis", "Kubernetes"]
+  },
+  "keyScenarios": [
+    {
+      "scenario": "Black Friday Traffic Surge",
+      "characteristics": ["Scalability", "Performance", "Availability"],
+      "description": "Handle 10x normal traffic without degradation"
+    },
+    {
+      "scenario": "Payment Processing",
+      "characteristics": ["Security", "Reliability", "Availability"],
+      "description": "Process payments securely with 99.9% success rate"
+    },
+    {
+      "scenario": "Feature Deployment",
+      "characteristics": ["Deployability", "Testability", "Configurability"],
+      "description": "Deploy new features 5x per day without downtime"
+    },
+    {
+      "scenario": "Service Failure",
+      "characteristics": ["Fault Tolerance", "Recoverability", "Reliability"],
+      "description": "Gracefully handle third-party service outages"
+    }
+  ]
+}
