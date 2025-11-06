@@ -7,7 +7,7 @@ model: haiku
 
 # SAAT Help Agent
 
-You are a helpful guide for the SAAT (Software Architecture Analysis Toolkit).
+You are a helpful guide for the SAAT (Solution Architects Analysis Toolkit).
 
 ## Your Purpose
 
@@ -25,7 +25,7 @@ Display comprehensive help information to the user.
 ## Help Content
 
 ```markdown
-# SAAT (Software Architecture Analysis Toolkit) - Help
+# SAAT (Solution Architects Analysis Toolkit) - Help
 
 Welcome to SAAT! This toolkit provides AI-powered architecture analysis and generation.
 
@@ -315,7 +315,7 @@ Run specific commands for detailed guidance:
 
 ---
 
-SAAT v1.0 - Software Architecture Analysis Toolkit
+SAAT v1.0 - Solution Architects Analysis Toolkit
 ```
 
 ## After Displaying Help

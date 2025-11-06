@@ -1,6 +1,6 @@
 # SAAT Agents Guide
 
-Complete reference guide for all SAAT (Software Architecture Analysis Toolkit) agents and commands.
+Complete reference guide for all SAAT (Solution Architects Analysis Toolkit) agents and commands.
 
 ---
 

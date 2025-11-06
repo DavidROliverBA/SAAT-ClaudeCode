@@ -1,0 +1,320 @@
+{
+  "projectName": "Microservices Platform",
+  "domain": "Cloud-Native Microservices",
+  "description": "Event-driven microservices architecture for high-scale distributed systems with service mesh",
+  "characteristics": [
+    {
+      "name": "Availability",
+      "importance": 9,
+      "target": 99.95,
+      "targetDescription": "99.95% uptime with circuit breakers and bulkheads",
+      "reason": "Microservices architecture enables high availability through isolation",
+      "measurements": [
+        "Service availability by criticality",
+        "Circuit breaker activations",
+        "Service mesh health metrics",
+        "Pod availability percentage"
+      ]
+    },
+    {
+      "name": "Performance",
+      "importance": 8,
+      "target": "Service-to-service latency < 50ms (p95), end-to-end < 500ms",
+      "targetDescription": "Low latency despite distributed architecture",
+      "reason": "Multiple service hops can compound latency - must optimize",
+      "measurements": [
+        "Service-to-service latency",
+        "End-to-end request tracing",
+        "Database query performance",
+        "Message queue latency"
+      ]
+    },
+    {
+      "name": "Scalability",
+      "importance": 10,
+      "target": "Independent service scaling, horizontal pod autoscaling (HPA)",
+      "targetDescription": "Each service scales independently based on load",
+      "reason": "Microservices key benefit is independent scaling",
+      "measurements": [
+        "Pod count by service",
+        "Auto-scaling events",
+        "Resource utilization per service",
+        "Load distribution across pods"
+      ]
+    },
+    {
+      "name": "Security",
+      "importance": 9,
+      "target": "Zero trust network, mutual TLS, service-level authorization",
+      "targetDescription": "Every service-to-service call authenticated and encrypted",
+      "reason": "Distributed architecture increases attack surface",
+      "measurements": [
+        "mTLS coverage percentage",
+        "Policy violations",
+        "Security audit findings",
+        "Network policy effectiveness"
+      ]
+    },
+    {
+      "name": "Reliability",
+      "importance": 8,
+      "target": "Error budget per service, SLO compliance 99.9%",
+      "targetDescription": "Each service has defined SLOs and error budgets",
+      "reason": "Microservices requires disciplined reliability engineering",
+      "measurements": [
+        "SLO compliance per service",
+        "Error budget consumption",
+        "Mean time between failures (MTBF)",
+        "Service error rates"
+      ]
+    },
+    {
+      "name": "Fault Tolerance",
+      "importance": 10,
+      "target": "Circuit breakers, retries with exponential backoff, timeouts on all calls",
+      "targetDescription": "Graceful degradation and failure isolation between services",
+      "reason": "Cascading failures must be prevented in distributed systems",
+      "measurements": [
+        "Circuit breaker trips",
+        "Retry success rate",
+        "Timeout occurrences",
+        "Bulkhead utilization",
+        "Chaos engineering test results"
+      ]
+    },
+    {
+      "name": "Recoverability",
+      "importance": 7,
+      "target": "Self-healing deployments, automated rollback",
+      "targetDescription": "Kubernetes health checks automatically restart failed pods",
+      "reason": "Microservices enable fast recovery through container orchestration",
+      "measurements": [
+        "Pod restart frequency",
+        "Time to recovery",
+        "Rollback automation success rate",
+        "Health check effectiveness"
+      ]
+    },
+    {
+      "name": "Maintainability",
+      "importance": 9,
+      "target": "Service independence, clear bounded contexts, API versioning",
+      "targetDescription": "Each service can be developed and maintained independently",
+      "reason": "Microservices architecture designed for independent team ownership",
+      "measurements": [
+        "Service coupling metrics",
+        "Code ownership clarity",
+        "API breaking change frequency",
+        "Documentation completeness per service"
+      ]
+    },
+    {
+      "name": "Testability",
+      "importance": 8,
+      "target": "Contract testing between services, independent service testing",
+      "targetDescription": "Test services in isolation with contract tests for integration",
+      "reason": "Distributed testing is complex - requires good test strategy",
+      "measurements": [
+        "Unit test coverage per service",
+        "Contract test coverage",
+        "Integration test coverage",
+        "End-to-end test scenarios",
+        "Test environment parity"
+      ]
+    },
+    {
+      "name": "Deployability",
+      "importance": 10,
+      "target": "Independent deployments, canary releases, blue-green per service",
+      "targetDescription": "Deploy each service independently without affecting others",
+      "reason": "Independent deployability is core benefit of microservices",
+      "measurements": [
+        "Deployment frequency per service",
+        "Deployment independence score",
+        "Canary deployment success rate",
+        "Rollback frequency",
+        "Mean time to deploy"
+      ]
+    },
+    {
+      "name": "Configurability",
+      "importance": 8,
+      "target": "Centralized configuration management, feature flags per service",
+      "targetDescription": "Configuration externalized from code, runtime updates possible",
+      "reason": "Microservices require coordinated configuration management",
+      "measurements": [
+        "Configuration externalization percentage",
+        "Feature flag usage per service",
+        "Configuration drift detection",
+        "Secret management coverage"
+      ]
+    },
+    {
+      "name": "Extensibility",
+      "importance": 9,
+      "target": "New services added without modifying existing services",
+      "targetDescription": "Event-driven architecture enables loose coupling and extensibility",
+      "reason": "Adding capabilities should not require changing existing services",
+      "measurements": [
+        "New service addition time",
+        "Breaking changes to existing services",
+        "Event schema evolution",
+        "Plugin/extension points used"
+      ]
+    },
+    {
+      "name": "Interoperability",
+      "importance": 9,
+      "target": "REST/gRPC APIs, event-driven async messaging, API gateway",
+      "targetDescription": "Standard protocols for synchronous and asynchronous communication",
+      "reason": "Microservices need consistent communication patterns",
+      "measurements": [
+        "API standard compliance",
+        "Service mesh adoption",
+        "Message format standardization",
+        "Cross-service communication success rate"
+      ]
+    },
+    {
+      "name": "Usability",
+      "importance": 6,
+      "target": "Developer experience: easy service creation, clear documentation",
+      "targetDescription": "Platform team provides tools and templates for service development",
+      "reason": "Good DX enables teams to build services efficiently",
+      "measurements": [
+        "Time to create new service",
+        "Developer satisfaction score",
+        "Documentation usage metrics",
+        "Self-service capability coverage"
+      ]
+    }
+  ],
+  "businessContext": {
+    "industry": "Technology Platform / Cloud-Native",
+    "architecture": "Event-driven microservices with service mesh",
+    "serviceCount": "50+ microservices",
+    "teamStructure": "10 product teams (each owns 3-7 services)",
+    "trafficVolume": "1M requests/minute",
+    "geographicScope": "Multi-region (US, EU, Asia)",
+    "regulatoryRequirements": ["SOC 2 Type II", "GDPR", "region-specific data residency"]
+  },
+  "technicalConstraints": {
+    "cloudProvider": "AWS (multi-region)",
+    "orchestration": "Kubernetes (EKS)",
+    "serviceMesh": "Istio",
+    "budget": "$150K/month infrastructure",
+    "team": "40 engineers across 10 product teams",
+    "deploymentFrequency": "Each team deploys multiple times per day",
+    "techStack": {
+      "languages": ["Go", "Node.js", "Python", "Java"],
+      "communication": ["gRPC (sync)", "Kafka (async)", "REST APIs"],
+      "databases": ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch"],
+      "observability": ["Prometheus", "Grafana", "Jaeger", "ELK Stack"],
+      "infrastructure": ["Terraform", "Helm", "ArgoCD (GitOps)"]
+    }
+  },
+  "keyScenarios": [
+    {
+      "scenario": "Service Deployment",
+      "characteristics": ["Deployability", "Testability", "Fault Tolerance"],
+      "description": "Deploy service update without affecting other services or users"
+    },
+    {
+      "scenario": "Service Failure",
+      "characteristics": ["Fault Tolerance", "Reliability", "Recoverability"],
+      "description": "One service failure contained, other services continue operating"
+    },
+    {
+      "scenario": "Add New Service",
+      "characteristics": ["Extensibility", "Maintainability", "Deployability"],
+      "description": "New team adds service to platform in < 1 day"
+    },
+    {
+      "scenario": "Scale Individual Service",
+      "characteristics": ["Scalability", "Performance", "Configurability"],
+      "description": "Scale one service from 2 to 50 pods during traffic spike"
+    },
+    {
+      "scenario": "Distributed Transaction",
+      "characteristics": ["Reliability", "Interoperability", "Performance"],
+      "description": "Saga pattern for multi-service transaction with eventual consistency"
+    },
+    {
+      "scenario": "Service Communication Failure",
+      "characteristics": ["Fault Tolerance", "Reliability", "Recoverability"],
+      "description": "Handle downstream service timeout with circuit breaker and fallback"
+    },
+    {
+      "scenario": "Debug Distributed Request",
+      "characteristics": ["Maintainability", "Interoperability", "Testability"],
+      "description": "Trace request across 10 services to diagnose issue"
+    }
+  ],
+  "architecturePatterns": {
+    "communicationPatterns": [
+      "Synchronous: gRPC for low-latency service-to-service calls",
+      "Asynchronous: Kafka for event-driven communication",
+      "API Gateway: Kong for external API management",
+      "Service Mesh: Istio for traffic management and security"
+    ],
+    "dataPatterns": [
+      "Database per Service: Each service owns its data",
+      "Event Sourcing: For audit trail and temporal queries",
+      "CQRS: Separate read and write models for high-scale services",
+      "Saga Pattern: Distributed transactions with compensation"
+    ],
+    "resiliencePatterns": [
+      "Circuit Breaker: Prevent cascading failures",
+      "Bulkhead: Isolate resources per service",
+      "Retry with Exponential Backoff: Handle transient failures",
+      "Timeout: Prevent resource exhaustion",
+      "Rate Limiting: Protect services from overload"
+    ],
+    "observabilityPatterns": [
+      "Distributed Tracing: Jaeger for request tracing",
+      "Metrics: Prometheus for service metrics",
+      "Logging: Centralized logging with ELK",
+      "Health Checks: Liveness and readiness probes",
+      "Service Level Indicators (SLIs): Per-service SLOs"
+    ]
+  },
+  "microservicesSpecificConcerns": {
+    "serviceOwnership": {
+      "model": "Team owns 3-7 related services (bounded context)",
+      "responsibilities": "Development, testing, deployment, monitoring, on-call",
+      "crossTeamDependencies": "Contract testing and API versioning required"
+    },
+    "dataChallenges": {
+      "distributedTransactions": "Saga pattern with compensation",
+      "dataConsistency": "Eventual consistency accepted",
+      "reporting": "Separate analytics service aggregates data",
+      "dataMigration": "Service-level migrations, no global migrations"
+    },
+    "operationalComplexity": {
+      "serviceDiscovery": "Kubernetes DNS + Istio service registry",
+      "configuration": "ConfigMaps + Secrets + external config service",
+      "deployment": "GitOps with ArgoCD",
+      "monitoring": "Per-service dashboards + golden signals (latency, traffic, errors, saturation)"
+    },
+    "teamStructure": {
+      "model": "Cross-functional teams (full-stack + DevOps)",
+      "autonomy": "Teams choose tech stack within approved options",
+      "platform": "Platform team provides shared services (CI/CD, observability, service mesh)",
+      "communication": "Weekly architecture sync, ADRs for major decisions"
+    }
+  },
+  "criticalityTiers": {
+    "CS1_MissionCritical": {
+      "services": ["auth-service", "payment-service", "order-service"],
+      "requirements": "Multi-region, 99.99% uptime, < 100ms latency"
+    },
+    "CS2_BusinessCritical": {
+      "services": ["user-service", "catalog-service", "inventory-service"],
+      "requirements": "Multi-AZ, 99.9% uptime, < 200ms latency"
+    },
+    "SL1_Standard": {
+      "services": ["notification-service", "reporting-service", "recommendation-service"],
+      "requirements": "Single-AZ, 99.5% uptime, < 500ms latency"
+    }
+  }
+}

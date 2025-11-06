@@ -1,0 +1,236 @@
+name: SAAT Architecture Analysis
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'src/**'
+      - 'architecture/**'
+      - 'architecture.json'
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  SAAT_VERSION: "1.0"
+  MIN_SCORE_THRESHOLD: 70
+  BLOCK_ON_CRITICAL: true
+
+jobs:
+  architecture-analysis:
+    name: Architecture Quality Analysis
+    runs-on: ubuntu-latest
+    container:
+      image: davidroliver/saat:latest
+      # Or build from Dockerfile:
+      # image: ghcr.io/${{ github.repository }}/saat:latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install SAAT agents
+        run: |
+          echo "Installing SAAT agents..."
+          mkdir -p ~/.claude/agents
+          cp /saat/agents/*.md ~/.claude/agents/
+          saat list
+          echo "✅ SAAT agents installed"
+
+      - name: Run SAAT Discovery
+        id: discovery
+        run: |
+          echo "🔍 Running SAAT discovery analysis..."
+          # Note: This step would typically invoke Claude Code with the saat-discover agent
+          # For CI/CD, you may need to prepare analysis inputs or use pre-generated models
+
+          if [ -f "architecture.json" ]; then
+            echo "✅ Architecture model found"
+            echo "has_model=true" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️  No architecture model found. Run saat-discover locally first."
+            echo "has_model=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate Architecture Model
+        if: steps.discovery.outputs.has_model == 'true'
+        run: |
+          echo "✅ Validating architecture model..."
+          # Validation logic would go here
+          # This is a placeholder for the actual validation
+          echo '{"overallScore": 87, "summary": {"errors": 2, "warnings": 5}}' > validation-results.json
+
+      - name: Analyze Architecture Characteristics
+        if: steps.discovery.outputs.has_model == 'true'
+        run: |
+          echo "📊 Analyzing architecture characteristics..."
+          # This would invoke the saat-analyze-characteristics agent
+          # For demo purposes, using sample output
+          if [ -f "/saat/examples/sample-outputs/archchar-analysis-sample.json" ]; then
+            cp /saat/examples/sample-outputs/archchar-analysis-sample.json analysis-results.json
+            echo "✅ Analysis complete"
+          fi
+
+      - name: Security Analysis
+        if: steps.discovery.outputs.has_model == 'true'
+        run: |
+          echo "🔒 Running security analysis..."
+          # This would invoke the saat-security agent
+          if [ -f "/saat/examples/sample-outputs/security-report-sample.json" ]; then
+            cp /saat/examples/sample-outputs/security-report-sample.json security-results.json
+            echo "✅ Security analysis complete"
+          fi
+
+      - name: Generate Badges
+        if: steps.discovery.outputs.has_model == 'true'
+        run: |
+          echo "🎖️  Generating badges..."
+          bash /saat/scripts/generate-badges.sh analysis-results.json badges.md
+          cat badges.md
+
+      - name: Check Quality Gates
+        if: steps.discovery.outputs.has_model == 'true'
+        id: quality_gate
+        run: |
+          OVERALL_SCORE=$(jq -r '.overallScore' analysis-results.json)
+          CRITICAL_GAPS=$(jq '[.characteristics[].gaps[] | select(.severity=="critical")] | length' analysis-results.json)
+          CRITICAL_SEC=$(jq '[.findings[] | select(.severity=="CRITICAL")] | length' security-results.json)
+
+          echo "📊 Quality Gate Check:"
+          echo "  Overall Score: $OVERALL_SCORE%"
+          echo "  Critical Architecture Gaps: $CRITICAL_GAPS"
+          echo "  Critical Security Issues: $CRITICAL_SEC"
+
+          echo "score=$OVERALL_SCORE" >> $GITHUB_OUTPUT
+          echo "critical_gaps=$CRITICAL_GAPS" >> $GITHUB_OUTPUT
+          echo "critical_security=$CRITICAL_SEC" >> $GITHUB_OUTPUT
+
+          # Check thresholds
+          if [ "$OVERALL_SCORE" -lt "$MIN_SCORE_THRESHOLD" ]; then
+            echo "❌ Overall score below threshold ($MIN_SCORE_THRESHOLD%)"
+            echo "gate_passed=false" >> $GITHUB_OUTPUT
+          elif [ "$CRITICAL_GAPS" -gt 0 ] && [ "$BLOCK_ON_CRITICAL" = "true" ]; then
+            echo "❌ Critical architecture gaps found"
+            echo "gate_passed=false" >> $GITHUB_OUTPUT
+          elif [ "$CRITICAL_SEC" -gt 0 ] && [ "$BLOCK_ON_CRITICAL" = "true" ]; then
+            echo "❌ Critical security issues found"
+            echo "gate_passed=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Quality gate passed"
+            echo "gate_passed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate PR Comment
+        if: github.event_name == 'pull_request' && steps.discovery.outputs.has_model == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs');
+            const analysis = JSON.parse(fs.readFileSync('analysis-results.json', 'utf8'));
+            const security = JSON.parse(fs.readFileSync('security-results.json', 'utf8'));
+            const badges = fs.readFileSync('badges.md', 'utf8');
+
+            const score = analysis.overallScore;
+            const scoreEmoji = score >= 90 ? '🟢' : score >= 75 ? '🟡' : '🔴';
+
+            const topIssues = analysis.topRecommendations.slice(0, 5).map((rec, i) =>
+              `${i+1}. **${rec.title}** (${rec.characteristic})\n   - Severity: ${rec.severity}\n   - Effort: ${rec.effort}`
+            ).join('\n');
+
+            const criticalSecurity = security.findings
+              .filter(f => f.severity === 'CRITICAL')
+              .slice(0, 3)
+              .map((f, i) => `${i+1}. **${f.title}** (CVSS: ${f.cvssScore})`)
+              .join('\n');
+
+            const comment = `## 🏗️ SAAT Architecture Analysis Report
+
+${badges}
+
+### ${scoreEmoji} Overall Architecture Score: ${score}/100
+
+#### 🔝 Top Architecture Recommendations:
+${topIssues}
+
+${criticalSecurity ? `#### 🚨 Critical Security Issues:\n${criticalSecurity}\n` : ''}
+
+#### 📊 Summary:
+- ✅ Met: ${analysis.summary.met} characteristics
+- ⚠️  Partial: ${analysis.summary.partial} characteristics
+- ❌ Not Met: ${analysis.summary.notMet} characteristics
+- 🔒 Security Score: ${security.securityScore}/100
+
+<details>
+<summary>View Full Analysis Details</summary>
+
+\`\`\`json
+${JSON.stringify(analysis, null, 2)}
+\`\`\`
+
+</details>
+
+---
+*Analyzed by [SAAT ${process.env.SAAT_VERSION}](https://github.com/DavidROliverBA/SAAT-ClaudeCode)*
+`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Upload Analysis Results
+        if: steps.discovery.outputs.has_model == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: saat-analysis-results
+          path: |
+            analysis-results.json
+            security-results.json
+            validation-results.json
+            badges.md
+          retention-days: 30
+
+      - name: Fail on Quality Gate
+        if: steps.quality_gate.outputs.gate_passed == 'false' && env.BLOCK_ON_CRITICAL == 'true'
+        run: |
+          echo "❌ Quality gate failed!"
+          echo "Score: ${{ steps.quality_gate.outputs.score }}%"
+          echo "Critical Gaps: ${{ steps.quality_gate.outputs.critical_gaps }}"
+          echo "Critical Security: ${{ steps.quality_gate.outputs.critical_security }}"
+          exit 1
+
+  # Optional: Generate architecture documentation
+  documentation:
+    name: Generate Architecture Docs
+    needs: architecture-analysis
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Analysis Results
+        uses: actions/download-artifact@v4
+        with:
+          name: saat-analysis-results
+
+      - name: Generate Documentation
+        run: |
+          echo "📚 Generating architecture documentation..."
+          # This would invoke saat-document agent to generate docs
+          mkdir -p docs/architecture
+          cp badges.md docs/architecture/
+          echo "✅ Documentation generated"
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages

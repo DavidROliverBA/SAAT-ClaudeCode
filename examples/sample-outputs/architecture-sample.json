@@ -1,0 +1,307 @@
+{
+  "projectName": "E-Commerce Platform",
+  "version": "1.0.0",
+  "generatedDate": "2025-11-06T20:45:00Z",
+  "source": "discovery.json",
+  "metadata": {
+    "architect": "SAAT Generation Agent",
+    "description": "Microservices-based e-commerce platform with event-driven architecture",
+    "tags": ["microservices", "event-driven", "cloud-native", "e-commerce"]
+  },
+  "systems": [
+    {
+      "id": "system-001",
+      "name": "E-Commerce Platform",
+      "type": "system",
+      "description": "Online retail platform for product sales, order management, and customer service",
+      "external": false,
+      "technology": "Microservices (Node.js, Python, React)",
+      "criticality": "CS1"
+    },
+    {
+      "id": "system-ext-001",
+      "name": "Stripe Payment Gateway",
+      "type": "system",
+      "description": "Third-party payment processing service",
+      "external": true,
+      "technology": "SaaS (Stripe API)",
+      "criticality": "CS1"
+    },
+    {
+      "id": "system-ext-002",
+      "name": "SendGrid Email Service",
+      "type": "system",
+      "description": "Transactional email delivery service",
+      "external": true,
+      "technology": "SaaS (SendGrid API)",
+      "criticality": "CS2"
+    }
+  ],
+  "containers": [
+    {
+      "id": "container-001",
+      "name": "Web Application",
+      "type": "container",
+      "containerType": "web-app",
+      "description": "React-based single-page application for customer shopping experience",
+      "technology": "React 18, TypeScript, Redux",
+      "systemId": "system-001",
+      "criticality": "CS2",
+      "interfaces": ["HTTPS", "WebSocket"],
+      "owner": "frontend-team@company.com"
+    },
+    {
+      "id": "container-002",
+      "name": "API Gateway",
+      "type": "container",
+      "containerType": "service",
+      "description": "Central API gateway for routing, authentication, and rate limiting",
+      "technology": "Kong API Gateway",
+      "systemId": "system-001",
+      "criticality": "CS1",
+      "interfaces": ["REST API", "WebSocket"],
+      "owner": "platform-team@company.com"
+    },
+    {
+      "id": "container-003",
+      "name": "User Service",
+      "type": "container",
+      "containerType": "service",
+      "description": "Manages user accounts, authentication, and authorization",
+      "technology": "Node.js, Express, TypeScript",
+      "systemId": "system-001",
+      "criticality": "CS1",
+      "interfaces": ["REST API"],
+      "owner": "identity-team@company.com"
+    },
+    {
+      "id": "container-004",
+      "name": "Payment Service",
+      "type": "container",
+      "containerType": "service",
+      "description": "Handles payment processing, refunds, and payment method management",
+      "technology": "Node.js, Express, TypeScript",
+      "systemId": "system-001",
+      "criticality": "CS1",
+      "interfaces": ["REST API", "Webhooks"],
+      "owner": "payments-team@company.com",
+      "securityNotes": "PCI-DSS compliant, handles sensitive payment data"
+    },
+    {
+      "id": "container-005",
+      "name": "Order Service",
+      "type": "container",
+      "containerType": "service",
+      "description": "Manages order lifecycle from creation to fulfillment",
+      "technology": "Node.js, Express, TypeScript",
+      "systemId": "system-001",
+      "criticality": "CS2",
+      "interfaces": ["REST API"],
+      "owner": "orders-team@company.com"
+    },
+    {
+      "id": "container-006",
+      "name": "Inventory Service",
+      "type": "container",
+      "containerType": "service",
+      "description": "Manages product catalog, stock levels, and inventory reservations",
+      "technology": "Python, FastAPI",
+      "systemId": "system-001",
+      "criticality": "CS2",
+      "interfaces": ["REST API"],
+      "owner": "inventory-team@company.com"
+    },
+    {
+      "id": "container-007",
+      "name": "Notification Service",
+      "type": "container",
+      "containerType": "service",
+      "description": "Sends email, SMS, and push notifications to customers",
+      "technology": "Node.js",
+      "systemId": "system-001",
+      "criticality": "SL1",
+      "interfaces": ["Event Consumer"],
+      "owner": "notifications-team@company.com"
+    },
+    {
+      "id": "container-008",
+      "name": "PostgreSQL Database Cluster",
+      "type": "container",
+      "containerType": "database",
+      "description": "Primary relational database for transactional data",
+      "technology": "PostgreSQL 14 (Multi-AZ)",
+      "systemId": "system-001",
+      "criticality": "CS1",
+      "interfaces": ["PostgreSQL Protocol"],
+      "owner": "database-team@company.com"
+    },
+    {
+      "id": "container-009",
+      "name": "Redis Cache",
+      "type": "container",
+      "containerType": "cache",
+      "description": "In-memory cache for session storage and API response caching",
+      "technology": "Redis 7.0",
+      "systemId": "system-001",
+      "criticality": "CS2",
+      "interfaces": ["Redis Protocol"],
+      "owner": "platform-team@company.com"
+    },
+    {
+      "id": "container-010",
+      "name": "Kafka Message Broker",
+      "type": "container",
+      "containerType": "message-queue",
+      "description": "Event streaming platform for asynchronous service communication",
+      "technology": "Apache Kafka",
+      "systemId": "system-001",
+      "criticality": "CS2",
+      "interfaces": ["Kafka Protocol"],
+      "owner": "platform-team@company.com"
+    },
+    {
+      "id": "container-011",
+      "name": "Elasticsearch",
+      "type": "container",
+      "containerType": "database",
+      "description": "Search engine for product search and log aggregation",
+      "technology": "Elasticsearch 8.x",
+      "systemId": "system-001",
+      "criticality": "SL1",
+      "interfaces": ["REST API"],
+      "owner": "search-team@company.com"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel-001",
+      "sourceId": "container-001",
+      "targetId": "container-002",
+      "type": "relationship",
+      "description": "Makes API calls for all backend functionality",
+      "protocol": "HTTPS/REST",
+      "synchronous": true,
+      "purpose": "Frontend-backend communication"
+    },
+    {
+      "id": "rel-002",
+      "sourceId": "container-002",
+      "targetId": "container-003",
+      "type": "relationship",
+      "description": "Routes authentication and user management requests",
+      "protocol": "HTTP/REST",
+      "synchronous": true,
+      "purpose": "User authentication and management"
+    },
+    {
+      "id": "rel-003",
+      "sourceId": "container-002",
+      "targetId": "container-005",
+      "type": "relationship",
+      "description": "Routes order management requests",
+      "protocol": "HTTP/REST",
+      "synchronous": true,
+      "purpose": "Order operations"
+    },
+    {
+      "id": "rel-004",
+      "sourceId": "container-003",
+      "targetId": "container-008",
+      "type": "relationship",
+      "description": "Reads and writes user data",
+      "protocol": "PostgreSQL",
+      "synchronous": true,
+      "purpose": "User data persistence"
+    },
+    {
+      "id": "rel-005",
+      "sourceId": "container-003",
+      "targetId": "container-009",
+      "type": "relationship",
+      "description": "Stores user sessions and caches user data",
+      "protocol": "Redis",
+      "synchronous": true,
+      "purpose": "Session management and caching"
+    },
+    {
+      "id": "rel-006",
+      "sourceId": "container-004",
+      "targetId": "system-ext-001",
+      "type": "relationship",
+      "description": "Processes payments via Stripe API",
+      "protocol": "HTTPS/REST",
+      "synchronous": true,
+      "purpose": "Payment processing"
+    },
+    {
+      "id": "rel-007",
+      "sourceId": "container-004",
+      "targetId": "container-010",
+      "type": "relationship",
+      "description": "Publishes payment events (success, failure, refund)",
+      "protocol": "Kafka",
+      "synchronous": false,
+      "purpose": "Event notification"
+    },
+    {
+      "id": "rel-008",
+      "sourceId": "container-005",
+      "targetId": "container-004",
+      "type": "relationship",
+      "description": "Initiates payment processing for orders",
+      "protocol": "HTTP/REST",
+      "synchronous": true,
+      "purpose": "Order payment"
+    },
+    {
+      "id": "rel-009",
+      "sourceId": "container-005",
+      "targetId": "container-006",
+      "type": "relationship",
+      "description": "Reserves inventory for orders",
+      "protocol": "HTTP/REST",
+      "synchronous": true,
+      "purpose": "Inventory reservation"
+    },
+    {
+      "id": "rel-010",
+      "sourceId": "container-005",
+      "targetId": "container-010",
+      "type": "relationship",
+      "description": "Publishes order events (created, confirmed, shipped, delivered)",
+      "protocol": "Kafka",
+      "synchronous": false,
+      "purpose": "Order lifecycle events"
+    },
+    {
+      "id": "rel-011",
+      "sourceId": "container-007",
+      "targetId": "container-010",
+      "type": "relationship",
+      "description": "Consumes events to trigger notifications",
+      "protocol": "Kafka",
+      "synchronous": false,
+      "purpose": "Event-driven notifications"
+    },
+    {
+      "id": "rel-012",
+      "sourceId": "container-007",
+      "targetId": "system-ext-002",
+      "type": "relationship",
+      "description": "Sends transactional emails",
+      "protocol": "HTTPS/REST",
+      "synchronous": true,
+      "purpose": "Email delivery"
+    },
+    {
+      "id": "rel-013",
+      "sourceId": "container-006",
+      "targetId": "container-011",
+      "type": "relationship",
+      "description": "Indexes products for search",
+      "protocol": "HTTP/REST",
+      "synchronous": false,
+      "purpose": "Product search indexing"
+    }
+  ]
+}

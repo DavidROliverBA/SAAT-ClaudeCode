@@ -1,0 +1,385 @@
+{
+  "projectName": "E-Commerce Platform",
+  "validationDate": "2025-11-06T20:45:00Z",
+  "complianceFramework": "PCI-DSS",
+  "saatVersion": "1.0",
+  "overallScore": 87,
+  "summary": {
+    "errors": 2,
+    "warnings": 5,
+    "info": 8,
+    "total": 15
+  },
+  "validationCategories": {
+    "structuralIntegrity": {
+      "score": 95,
+      "passed": true,
+      "issues": [
+        {
+          "severity": "ERROR",
+          "category": "structuralIntegrity",
+          "id": "VAL-SI-001",
+          "element": "rel-014",
+          "elementType": "relationship",
+          "issue": "Relationship references non-existent container",
+          "description": "Relationship 'rel-014' has sourceId 'container-099' which does not exist in containers array",
+          "fix": "Remove relationship 'rel-014' or update sourceId to valid container",
+          "impact": "Model cannot be processed by documentation and infrastructure generators",
+          "line": null,
+          "affectedTools": ["saat-document", "saat-terraform"]
+        }
+      ]
+    },
+    "completeness": {
+      "score": 80,
+      "passed": true,
+      "issues": [
+        {
+          "severity": "WARNING",
+          "category": "completeness",
+          "id": "VAL-CP-001",
+          "element": "container-004",
+          "elementType": "container",
+          "issue": "Critical container missing owner assignment",
+          "description": "Container 'Payment Service' has criticality CS1 but no owner field specified",
+          "fix": "Add 'owner' field to container-004: \"owner\": \"payments-team@company.com\"",
+          "impact": "Unclear accountability for mission-critical service. Impacts incident response",
+          "recommendation": "All CS1 and CS2 containers should have assigned owners"
+        },
+        {
+          "severity": "WARNING",
+          "category": "completeness",
+          "id": "VAL-CP-002",
+          "element": "container-005",
+          "elementType": "container",
+          "issue": "Container missing interface specification",
+          "description": "Container 'Order Service' has no 'interfaces' field",
+          "fix": "Add 'interfaces' field: \"interfaces\": [\"REST API\"]",
+          "impact": "Incomplete documentation, unclear service communication patterns"
+        },
+        {
+          "severity": "WARNING",
+          "category": "completeness",
+          "id": "VAL-CP-003",
+          "element": "container-007",
+          "elementType": "container",
+          "issue": "Container description too brief",
+          "description": "Container 'Notification Service' has description < 20 characters",
+          "fix": "Expand description to explain purpose, responsibilities, and key features",
+          "impact": "Poor documentation quality"
+        }
+      ]
+    },
+    "bestPractices": {
+      "score": 85,
+      "passed": true,
+      "issues": [
+        {
+          "severity": "INFO",
+          "category": "bestPractices",
+          "id": "VAL-BP-001",
+          "element": "rel-003, rel-004, rel-005, rel-007, rel-008, rel-010, rel-011, rel-013",
+          "elementType": "relationship",
+          "issue": "8 relationships missing protocol specification",
+          "description": "Relationships should specify communication protocol (e.g., 'HTTP/REST', 'gRPC', 'AMQP', 'Kafka')",
+          "fix": "Add 'protocol' field to each relationship",
+          "impact": "Incomplete documentation, unclear communication patterns",
+          "example": "\"protocol\": \"HTTPS/REST\""
+        },
+        {
+          "severity": "INFO",
+          "category": "bestPractices",
+          "id": "VAL-BP-002",
+          "element": "rel-006, rel-009, rel-012",
+          "elementType": "relationship",
+          "issue": "3 relationships missing synchronous flag",
+          "description": "Relationships should indicate if communication is synchronous or asynchronous",
+          "fix": "Add 'synchronous' field: true for sync, false for async",
+          "impact": "Unclear if calls block or are fire-and-forget",
+          "example": "\"synchronous\": true"
+        },
+        {
+          "severity": "INFO",
+          "category": "bestPractices",
+          "id": "VAL-BP-003",
+          "element": "container-009",
+          "elementType": "container",
+          "issue": "Cache container missing eviction policy",
+          "description": "Redis cache should document eviction policy (LRU, LFU, etc.)",
+          "fix": "Add to description or metadata",
+          "impact": "Operational teams unclear on cache behavior when full"
+        },
+        {
+          "severity": "INFO",
+          "category": "bestPractices",
+          "id": "VAL-BP-004",
+          "element": "system-001",
+          "elementType": "system",
+          "issue": "No components defined",
+          "description": "Architecture has containers but no Level 3 (component) details",
+          "fix": "Add components array with internal modules for key containers",
+          "impact": "Missing detailed internal structure documentation",
+          "recommendation": "At minimum, document components for CS1 and CS2 containers"
+        }
+      ]
+    },
+    "namingConventions": {
+      "score": 90,
+      "passed": true,
+      "issues": [
+        {
+          "severity": "INFO",
+          "category": "namingConventions",
+          "id": "VAL-NC-001",
+          "element": "container-011",
+          "elementType": "container",
+          "issue": "Inconsistent naming style",
+          "description": "Container name 'Elasticsearch' uses different style than others (should be 'Elasticsearch Service' or 'Search Engine')",
+          "fix": "Rename to match pattern: '[Purpose] Service/Database/Queue'",
+          "impact": "Minor inconsistency in documentation"
+        }
+      ]
+    },
+    "criticalityAssignment": {
+      "score": 95,
+      "passed": true,
+      "issues": [
+        {
+          "severity": "WARNING",
+          "category": "criticalityAssignment",
+          "id": "VAL-CR-001",
+          "element": "container-003",
+          "elementType": "container",
+          "issue": "Criticality may be underrated",
+          "description": "Container 'User Service' handles authentication (CS1 function) but marked CS2",
+          "fix": "Consider upgrading to CS1 if authentication outage = platform outage",
+          "impact": "Incorrect SLA targets, inadequate redundancy planning",
+          "recommendation": "Review with business stakeholders"
+        },
+        {
+          "severity": "INFO",
+          "category": "criticalityAssignment",
+          "id": "VAL-CR-002",
+          "element": "container-010",
+          "elementType": "container",
+          "issue": "Message queue criticality assessment",
+          "description": "Kafka marked CS2. Verify if async processing can tolerate short outages",
+          "fix": "If notifications must be real-time, upgrade to CS1",
+          "impact": "Risk assessment for message loss during outages"
+        }
+      ]
+    },
+    "security": {
+      "score": 85,
+      "passed": true,
+      "issues": [
+        {
+          "severity": "WARNING",
+          "category": "security",
+          "id": "VAL-SE-001",
+          "element": "container-004",
+          "elementType": "container",
+          "issue": "Payment container missing security notes",
+          "description": "Payment Service (PCI-DSS scope) should have detailed security notes",
+          "fix": "Add 'securityNotes' field documenting: PCI-DSS compliance, tokenization, encryption requirements",
+          "impact": "Incomplete security documentation",
+          "recommendation": "Document all PCI-DSS controls"
+        }
+      ]
+    },
+    "compliance": {
+      "score": 70,
+      "passed": false,
+      "framework": "PCI-DSS",
+      "issues": [
+        {
+          "severity": "ERROR",
+          "category": "compliance",
+          "id": "VAL-CO-001",
+          "framework": "PCI-DSS",
+          "requirement": "Requirement 2.2 - High Availability",
+          "element": "container-004",
+          "issue": "Payment Service lacks redundancy",
+          "description": "PCI-DSS Level 1 requires high availability for payment processing. Single instance deployment detected",
+          "fix": "Deploy payment service in multi-AZ configuration with load balancing",
+          "impact": "PCI-DSS non-compliance, potential audit failure",
+          "complianceGap": "Critical",
+          "remediation": "Implement active-active deployment across multiple availability zones"
+        },
+        {
+          "severity": "INFO",
+          "category": "compliance",
+          "id": "VAL-CO-002",
+          "framework": "PCI-DSS",
+          "requirement": "Requirement 10.2 - Audit Logging",
+          "element": "container-004",
+          "issue": "Audit logging not documented",
+          "description": "PCI-DSS requires comprehensive audit logs for payment operations",
+          "fix": "Document audit logging strategy in container description or add to metadata",
+          "impact": "Audit trail requirements unclear"
+        }
+      ]
+    }
+  },
+  "detailedIssues": [
+    {
+      "severity": "ERROR",
+      "id": "VAL-SI-001",
+      "category": "structuralIntegrity",
+      "priority": "MUST_FIX",
+      "element": {
+        "id": "rel-014",
+        "type": "relationship"
+      },
+      "issue": "Invalid relationship reference",
+      "description": "Relationship 'rel-014' references container 'container-099' which does not exist",
+      "location": {
+        "file": "architecture.json",
+        "path": "relationships[13]"
+      },
+      "fix": {
+        "action": "DELETE",
+        "description": "Remove invalid relationship",
+        "code": "Remove relationships[13] or update sourceId to valid container ID"
+      },
+      "impact": {
+        "severity": "HIGH",
+        "description": "Breaks model processing in downstream tools",
+        "affectedTools": ["saat-document", "saat-terraform"],
+        "userImpact": "Documentation and infrastructure generation will fail"
+      }
+    },
+    {
+      "severity": "WARNING",
+      "id": "VAL-CP-001",
+      "category": "completeness",
+      "priority": "SHOULD_FIX",
+      "element": {
+        "id": "container-004",
+        "name": "Payment Service",
+        "type": "container"
+      },
+      "issue": "Missing owner assignment",
+      "description": "CS1 container has no owner field. Ownership required for mission-critical services",
+      "fix": {
+        "action": "ADD",
+        "field": "owner",
+        "suggestedValue": "payments-team@company.com",
+        "code": "container-004.owner = \"payments-team@company.com\""
+      },
+      "impact": {
+        "severity": "MEDIUM",
+        "description": "Unclear accountability during incidents",
+        "operationalImpact": "Delayed incident response, unclear escalation path"
+      },
+      "bestPractice": "All CS1 and CS2 containers should have designated owners"
+    }
+  ],
+  "statistics": {
+    "systems": {
+      "total": 3,
+      "external": 2,
+      "internal": 1,
+      "withOwners": 1
+    },
+    "containers": {
+      "total": 11,
+      "byType": {
+        "service": 6,
+        "web-app": 1,
+        "database": 2,
+        "cache": 1,
+        "message-queue": 1
+      },
+      "byCriticality": {
+        "CS1": 3,
+        "CS2": 4,
+        "SL1": 3,
+        "SL2": 0,
+        "STANDARD": 1
+      },
+      "withOwners": 9,
+      "withInterfaces": 9,
+      "withDescriptions": 11
+    },
+    "relationships": {
+      "total": 13,
+      "synchronous": 10,
+      "asynchronous": 3,
+      "withProtocols": 5,
+      "withPurpose": 13
+    },
+    "components": {
+      "total": 0,
+      "note": "No Level 3 components defined"
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "IMMEDIATE",
+      "category": "errors",
+      "recommendation": "Fix 2 ERROR issues before proceeding",
+      "details": [
+        "Remove or fix invalid relationship (rel-014)",
+        "Resolve PCI-DSS compliance gap for payment service"
+      ]
+    },
+    {
+      "priority": "HIGH",
+      "category": "completeness",
+      "recommendation": "Add missing metadata to improve documentation quality",
+      "details": [
+        "Assign owners to all CS1/CS2 containers (3 missing)",
+        "Specify interfaces for all containers (2 missing)",
+        "Expand brief descriptions (1 container)"
+      ]
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "best-practices",
+      "recommendation": "Enhance model with additional details",
+      "details": [
+        "Add protocol field to 8 relationships",
+        "Add synchronous flag to 3 relationships",
+        "Document components for key containers (Level 3 detail)"
+      ]
+    }
+  ],
+  "validationRules": {
+    "applied": [
+      "ID uniqueness check",
+      "Reference validity check",
+      "Orphan detection",
+      "Completeness checks",
+      "Naming convention checks",
+      "Criticality assignment validation",
+      "Security documentation checks",
+      "PCI-DSS compliance checks (framework-specific)"
+    ],
+    "framework": "PCI-DSS Level 1"
+  },
+  "nextSteps": {
+    "immediate": [
+      "Fix invalid relationship reference (rel-014)",
+      "Address PCI-DSS compliance gap"
+    ],
+    "shortTerm": [
+      "Add owners to CS1/CS2 containers",
+      "Add missing interface specifications",
+      "Document protocols for all relationships"
+    ],
+    "optional": [
+      "Add Level 3 component details",
+      "Enhance descriptions",
+      "Review criticality assignments with stakeholders"
+    ]
+  },
+  "passFailStatus": {
+    "overall": "PASS_WITH_WARNINGS",
+    "structuralIntegrity": "FAIL",
+    "completeness": "PASS",
+    "bestPractices": "PASS",
+    "compliance": "FAIL",
+    "explanation": "Model has structural errors that must be fixed. Compliance gaps require attention before production."
+  }
+}

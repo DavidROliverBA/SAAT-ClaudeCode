@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  saat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: saat:latest
+    container_name: saat-toolkit
+    volumes:
+      # Mount your project directory
+      - ./workspace:/workspace
+      # Mount Claude agents directory (if you want to use installed agents)
+      - ~/.claude/agents:/root/.claude/agents
+    environment:
+      - SAAT_VERSION=1.0
+      - TZ=UTC
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    labels:
+      com.saat.description: "Solution Architects Analysis Toolkit"
+      com.saat.version: "1.0"
+
+  # Example: Run SAAT with a specific project
+  saat-analysis:
+    image: saat:latest
+    container_name: saat-analysis
+    volumes:
+      - ./workspace:/workspace
+      - ~/.claude/agents:/root/.claude/agents
+    working_dir: /workspace
+    command: bash -c "saat list && echo 'Ready for analysis!' && /bin/bash"
+    stdin_open: true
+    tty: true
+
+networks:
+  default:
+    name: saat-network

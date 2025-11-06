@@ -1,0 +1,285 @@
+{
+  "projectName": "FinTech Payment Platform",
+  "domain": "Financial Technology",
+  "description": "Digital payment processing platform for real-time transactions, fraud detection, and multi-currency support",
+  "characteristics": [
+    {
+      "name": "Availability",
+      "importance": 10,
+      "target": 99.99,
+      "targetDescription": "99.99% uptime (4.38 minutes downtime/month max)",
+      "reason": "Financial transactions must be available 24/7 globally - downtime = revenue loss",
+      "measurements": [
+        "Monthly uptime percentage",
+        "Availability by region",
+        "Transaction processing uptime",
+        "API availability SLA compliance"
+      ]
+    },
+    {
+      "name": "Performance",
+      "importance": 10,
+      "target": "Transaction processing < 100ms (p95), < 300ms (p99)",
+      "targetDescription": "Real-time payment processing with sub-second response",
+      "reason": "Payment delays cause transaction abandonment and poor user experience",
+      "measurements": [
+        "Transaction latency (p50, p95, p99)",
+        "API response time",
+        "Database query performance",
+        "Network latency by region"
+      ]
+    },
+    {
+      "name": "Scalability",
+      "importance": 9,
+      "target": "Process 100,000 TPS (transactions per second), scale to 1M TPS",
+      "targetDescription": "Handle Black Friday peaks and viral product launches",
+      "reason": "Payment volume can spike 100x during flash sales",
+      "measurements": [
+        "Transactions per second capacity",
+        "Horizontal scaling speed",
+        "Database throughput",
+        "Queue processing rate"
+      ]
+    },
+    {
+      "name": "Security",
+      "importance": 10,
+      "target": "PCI-DSS Level 1, SOC 2 Type II, ISO 27001, zero breaches",
+      "targetDescription": "Military-grade security for financial data and transactions",
+      "reason": "Data breach: $150-$200 per compromised record, regulatory fines, reputation damage",
+      "measurements": [
+        "PCI-DSS compliance score (quarterly)",
+        "Penetration test results",
+        "Vulnerability scan findings (weekly)",
+        "Security incident count",
+        "Fraud detection accuracy"
+      ]
+    },
+    {
+      "name": "Reliability",
+      "importance": 10,
+      "target": "Transaction success rate 99.99%, zero data loss",
+      "targetDescription": "Every transaction must be processed correctly or safely failed",
+      "reason": "Financial data loss or corruption has severe legal and financial consequences",
+      "measurements": [
+        "Transaction success rate",
+        "Payment failure rate by reason",
+        "Data consistency validation",
+        "Reconciliation accuracy"
+      ]
+    },
+    {
+      "name": "Fault Tolerance",
+      "importance": 9,
+      "target": "Multi-region active-active, automatic failover < 30 seconds",
+      "targetDescription": "Continue processing transactions during infrastructure failures",
+      "reason": "Single point of failure unacceptable for financial transactions",
+      "measurements": [
+        "Failover success rate",
+        "Failover time",
+        "Circuit breaker activations",
+        "Chaos engineering test results"
+      ]
+    },
+    {
+      "name": "Recoverability",
+      "importance": 10,
+      "target": "RTO < 5 minutes, RPO = 0 (zero data loss)",
+      "targetDescription": "Point-in-time recovery, continuous backup, transaction replay",
+      "reason": "Financial data cannot be lost - regulatory and legal requirements",
+      "measurements": [
+        "Backup frequency (continuous)",
+        "Transaction log retention",
+        "Disaster recovery drill results",
+        "Data replication lag (< 1 second)"
+      ]
+    },
+    {
+      "name": "Maintainability",
+      "importance": 7,
+      "target": "Code quality > 90%, zero critical bugs in production",
+      "targetDescription": "Highly maintainable code for regulated financial environment",
+      "reason": "Financial software requires rigorous quality and audit trails",
+      "measurements": [
+        "Code quality score (SonarQube)",
+        "Technical debt ratio",
+        "Bug escape rate",
+        "Mean time to fix (MTTF)"
+      ]
+    },
+    {
+      "name": "Testability",
+      "importance": 9,
+      "target": "95% code coverage, comprehensive financial test scenarios",
+      "targetDescription": "Test all edge cases, regulatory scenarios, fraud patterns",
+      "reason": "Financial software bugs can cause significant monetary loss",
+      "measurements": [
+        "Unit test coverage",
+        "Integration test coverage",
+        "Scenario test coverage",
+        "Chaos engineering coverage"
+      ]
+    },
+    {
+      "name": "Deployability",
+      "importance": 7,
+      "target": "Daily deployments with zero-downtime, instant rollback",
+      "targetDescription": "Canary deployments, feature flags, blue-green deployment",
+      "reason": "Need rapid feature delivery while maintaining stability",
+      "measurements": [
+        "Deployment frequency",
+        "Deployment success rate",
+        "Rollback time (< 2 minutes)",
+        "Change failure rate"
+      ]
+    },
+    {
+      "name": "Configurability",
+      "importance": 8,
+      "target": "Runtime configuration for fraud rules, rate limits, fees",
+      "targetDescription": "Adjust fraud detection, pricing, limits without deployment",
+      "reason": "Fraud patterns and business rules change dynamically",
+      "measurements": [
+        "Configuration change deployment time",
+        "Feature flag coverage",
+        "Dynamic rule engine usage",
+        "A/B test capability"
+      ]
+    },
+    {
+      "name": "Extensibility",
+      "importance": 7,
+      "target": "Plugin architecture for payment methods and currencies",
+      "targetDescription": "Add new payment providers, cryptocurrencies without core changes",
+      "reason": "Payment landscape evolves rapidly (new methods, regulations)",
+      "measurements": [
+        "Payment method integration time",
+        "Currency support addition time",
+        "API version compatibility",
+        "Third-party integration count"
+      ]
+    },
+    {
+      "name": "Interoperability",
+      "importance": 9,
+      "target": "ISO 20022, SWIFT, SEPA, ACH, card network compliance",
+      "targetDescription": "Integrate with global payment networks and banking systems",
+      "reason": "Financial industry requires standards compliance for interoperability",
+      "measurements": [
+        "Payment standard compliance rate",
+        "Bank integration success rate",
+        "API compatibility score",
+        "Cross-border transaction support"
+      ]
+    },
+    {
+      "name": "Usability",
+      "importance": 6,
+      "target": "Payment completion rate > 95%, intuitive merchant dashboard",
+      "targetDescription": "Simple integration for developers, clear UX for end users",
+      "reason": "Complex payment flows cause cart abandonment",
+      "measurements": [
+        "Payment completion rate",
+        "Integration time for new merchants",
+        "Developer satisfaction (SDK usage)",
+        "Support ticket volume"
+      ]
+    }
+  ],
+  "businessContext": {
+    "industry": "Financial Technology / Payments",
+    "userBase": "50,000 merchants, 10M end customers",
+    "transactionVolume": "$5B processed annually, 50M transactions/month",
+    "geographicScope": "Global (North America, Europe, Asia-Pacific)",
+    "regulatoryRequirements": [
+      "PCI-DSS Level 1",
+      "SOC 2 Type II",
+      "ISO 27001",
+      "GDPR (EU)",
+      "PSD2 (EU)",
+      "CCPA (California)",
+      "AML/KYC regulations",
+      "Bank Secrecy Act (BSA)",
+      "Payment Services Directive",
+      "Regional payment regulations (per country)"
+    ]
+  },
+  "technicalConstraints": {
+    "cloudProvider": "Multi-cloud (AWS, GCP) for redundancy",
+    "budget": "$200K/month infrastructure + security + compliance",
+    "team": "50 engineers, 5 security specialists, 3 compliance officers",
+    "deploymentFrequency": "Daily (critical patches: immediate)",
+    "existingTech": [
+      "Java/Spring Boot",
+      "React",
+      "PostgreSQL (for transactional data)",
+      "Cassandra (for high-volume logs)",
+      "Kafka (event streaming)",
+      "Redis (caching)",
+      "Kubernetes",
+      "Istio (service mesh)"
+    ],
+    "certifications": ["PCI-DSS Level 1", "SOC 2 Type II", "ISO 27001"]
+  },
+  "keyScenarios": [
+    {
+      "scenario": "Real-Time Payment Processing",
+      "characteristics": ["Performance", "Reliability", "Availability"],
+      "description": "Process payment transaction in < 100ms with 99.99% success rate"
+    },
+    {
+      "scenario": "Fraud Detection",
+      "characteristics": ["Security", "Performance", "Configurability"],
+      "description": "Real-time fraud analysis without impacting transaction latency"
+    },
+    {
+      "scenario": "Cross-Border Transaction",
+      "characteristics": ["Interoperability", "Performance", "Reliability"],
+      "description": "Process multi-currency payment across international payment networks"
+    },
+    {
+      "scenario": "Data Center Failure",
+      "characteristics": ["Fault Tolerance", "Availability", "Recoverability"],
+      "description": "Automatic failover to backup region with zero transaction loss"
+    },
+    {
+      "scenario": "Regulatory Audit",
+      "characteristics": ["Security", "Maintainability", "Testability"],
+      "description": "Demonstrate compliance with all audit trails and documentation"
+    },
+    {
+      "scenario": "Black Friday Traffic Spike",
+      "characteristics": ["Scalability", "Performance", "Reliability"],
+      "description": "Handle 100x normal transaction volume without degradation"
+    }
+  ],
+  "securityRequirements": {
+    "encryption": {
+      "inTransit": "TLS 1.3 minimum",
+      "atRest": "AES-256 for all financial data",
+      "keyManagement": "HSM (Hardware Security Module) for key storage"
+    },
+    "authentication": {
+      "users": "MFA required for all accounts",
+      "services": "Mutual TLS (mTLS) for service-to-service",
+      "api": "OAuth 2.0 + JWT with short expiration"
+    },
+    "authorization": {
+      "model": "RBAC + ABAC for fine-grained control",
+      "leastPrivilege": "Strict least-privilege access",
+      "segregationOfDuties": "Required for financial operations"
+    },
+    "monitoring": {
+      "siem": "24/7 Security Operations Center (SOC)",
+      "fraudDetection": "Real-time ML-based fraud detection",
+      "auditLogging": "Immutable audit logs (7 years retention)"
+    }
+  },
+  "dataClassification": {
+    "critical": "Payment card data (PAN, CVV), bank account numbers",
+    "confidential": "Transaction history, user financial data",
+    "internal": "Merchant analytics, aggregated data",
+    "public": "Marketing content, public APIs"
+  }
+}

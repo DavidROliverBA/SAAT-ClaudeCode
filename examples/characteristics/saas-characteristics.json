@@ -1,0 +1,277 @@
+{
+  "projectName": "SaaS Analytics Platform",
+  "domain": "Software as a Service",
+  "description": "Multi-tenant analytics and business intelligence platform with real-time dashboards and data processing",
+  "characteristics": [
+    {
+      "name": "Availability",
+      "importance": 8,
+      "target": 99.9,
+      "targetDescription": "99.9% uptime with published SLA",
+      "reason": "Customers rely on analytics for business decisions - downtime impacts trust",
+      "measurements": [
+        "Monthly uptime percentage",
+        "SLA compliance rate",
+        "Planned maintenance windows",
+        "Incident response time"
+      ]
+    },
+    {
+      "name": "Performance",
+      "importance": 9,
+      "target": "Dashboard load < 2 seconds, query execution < 5 seconds (95th percentile)",
+      "targetDescription": "Fast, responsive analytics experience",
+      "reason": "Slow dashboards lead to customer churn - performance is key differentiator",
+      "measurements": [
+        "Dashboard load time",
+        "Query execution time",
+        "Data processing latency",
+        "Report generation time"
+      ]
+    },
+    {
+      "name": "Scalability",
+      "importance": 10,
+      "target": "Support 10,000 customers, 1M queries/day, 1TB data/customer",
+      "targetDescription": "Elastic scaling for growing customer base and data volumes",
+      "reason": "SaaS model requires efficient multi-tenant scaling",
+      "measurements": [
+        "Tenant capacity",
+        "Query throughput",
+        "Data volume per tenant",
+        "Concurrent user capacity",
+        "Storage scaling efficiency"
+      ]
+    },
+    {
+      "name": "Security",
+      "importance": 9,
+      "target": "SOC 2 Type II, ISO 27001, tenant data isolation",
+      "targetDescription": "Complete data isolation, encryption, access controls",
+      "reason": "Customers trust us with sensitive business data",
+      "measurements": [
+        "Security audit score",
+        "Tenant isolation verification",
+        "Penetration test results",
+        "Data breach incidents (target: 0)"
+      ]
+    },
+    {
+      "name": "Reliability",
+      "importance": 8,
+      "target": "Data accuracy 100%, query success rate > 99.5%",
+      "targetDescription": "Accurate analytics data, reliable query execution",
+      "reason": "Business decisions based on our data must be accurate",
+      "measurements": [
+        "Data accuracy validation",
+        "Query success rate",
+        "Data consistency checks",
+        "ETL pipeline success rate"
+      ]
+    },
+    {
+      "name": "Fault Tolerance",
+      "importance": 7,
+      "target": "Graceful degradation, queue-based architecture",
+      "targetDescription": "Continue operating with reduced functionality during failures",
+      "reason": "Partial service better than complete outage",
+      "measurements": [
+        "Circuit breaker activations",
+        "Queue depth during failures",
+        "Fallback mechanism usage",
+        "Service mesh health"
+      ]
+    },
+    {
+      "name": "Recoverability",
+      "importance": 7,
+      "target": "RTO < 1 hour, RPO < 15 minutes",
+      "targetDescription": "Hourly backups, point-in-time recovery",
+      "reason": "Customer data loss unacceptable for business SaaS",
+      "measurements": [
+        "Backup frequency",
+        "Restore time testing",
+        "Data replication lag",
+        "Disaster recovery drills (quarterly)"
+      ]
+    },
+    {
+      "name": "Maintainability",
+      "importance": 8,
+      "target": "Code quality > 85%, modular microservices architecture",
+      "targetDescription": "Clean, well-documented code for rapid feature development",
+      "reason": "Fast feature velocity requires maintainable codebase",
+      "measurements": [
+        "Code quality metrics",
+        "Technical debt ratio",
+        "Service independence score",
+        "Documentation coverage"
+      ]
+    },
+    {
+      "name": "Testability",
+      "importance": 7,
+      "target": "80% code coverage, automated integration tests",
+      "targetDescription": "Comprehensive testing for multi-tenant scenarios",
+      "reason": "Multi-tenant bugs affect multiple customers",
+      "measurements": [
+        "Unit test coverage",
+        "Integration test coverage",
+        "Multi-tenant test scenarios",
+        "Test execution time"
+      ]
+    },
+    {
+      "name": "Deployability",
+      "importance": 9,
+      "target": "Deploy 10+ times per day, canary releases, instant rollback",
+      "targetDescription": "Continuous deployment with zero customer impact",
+      "reason": "SaaS requires rapid feature delivery and bug fixes",
+      "measurements": [
+        "Deployment frequency",
+        "Deployment success rate",
+        "Mean time to deploy",
+        "Rollback frequency and time"
+      ]
+    },
+    {
+      "name": "Configurability",
+      "importance": 10,
+      "target": "Per-tenant customization, white-labeling, feature flags",
+      "targetDescription": "Each customer can customize dashboards, branding, features",
+      "reason": "SaaS customers expect customization without custom code",
+      "measurements": [
+        "Tenant configuration options count",
+        "White-label customization time",
+        "Feature flag coverage",
+        "Configuration change time"
+      ]
+    },
+    {
+      "name": "Extensibility",
+      "importance": 9,
+      "target": "Plugin marketplace, custom integrations, webhook support",
+      "targetDescription": "Customers can extend platform with custom connectors and plugins",
+      "reason": "Analytics platform must integrate with diverse data sources",
+      "measurements": [
+        "Available integrations count",
+        "Custom plugin development time",
+        "API extension usage",
+        "Webhook reliability"
+      ]
+    },
+    {
+      "name": "Interoperability",
+      "importance": 9,
+      "target": "RESTful API, webhooks, 100+ data source connectors",
+      "targetDescription": "Integrate with popular SaaS tools (Salesforce, Stripe, Shopify, etc.)",
+      "reason": "SaaS analytics requires data from multiple sources",
+      "measurements": [
+        "Data connector count",
+        "API usage rate",
+        "Integration success rate",
+        "Data source compatibility"
+      ]
+    },
+    {
+      "name": "Usability",
+      "importance": 9,
+      "target": "Time to first value < 10 minutes, NPS > 50",
+      "targetDescription": "Intuitive self-service analytics, minimal onboarding time",
+      "reason": "SaaS adoption depends on ease of use",
+      "measurements": [
+        "Time to first dashboard",
+        "User activation rate",
+        "Net Promoter Score (NPS)",
+        "Customer satisfaction (CSAT)",
+        "Support ticket volume"
+      ]
+    }
+  ],
+  "businessContext": {
+    "industry": "SaaS / Business Intelligence",
+    "userBase": "5,000 customers (B2B), 50,000 end users",
+    "transactionVolume": "1M queries/day, 100M data points/day ingested",
+    "geographicScope": "Global (primarily North America and Europe)",
+    "pricingModel": "Subscription-based (tiers based on data volume and users)",
+    "regulatoryRequirements": ["GDPR", "CCPA", "SOC 2 Type II", "ISO 27001"]
+  },
+  "technicalConstraints": {
+    "cloudProvider": "AWS",
+    "budget": "$100K/month infrastructure (scales with customers)",
+    "team": "25 engineers (5 teams: Frontend, Backend, Data Engineering, ML, DevOps)",
+    "deploymentFrequency": "10+ times per day",
+    "existingTech": [
+      "TypeScript/Node.js",
+      "React/Next.js",
+      "Python (data processing)",
+      "PostgreSQL (metadata)",
+      "Clickhouse (analytics data)",
+      "Redis (caching)",
+      "Kafka (event streaming)",
+      "Kubernetes",
+      "Airflow (workflow orchestration)"
+    ]
+  },
+  "keyScenarios": [
+    {
+      "scenario": "Customer Onboarding",
+      "characteristics": ["Usability", "Performance", "Configurability"],
+      "description": "New customer creates first dashboard in < 10 minutes"
+    },
+    {
+      "scenario": "Large Dataset Query",
+      "characteristics": ["Performance", "Scalability", "Reliability"],
+      "description": "Query 1TB dataset and return results in < 10 seconds"
+    },
+    {
+      "scenario": "Multi-Tenant Scaling",
+      "characteristics": ["Scalability", "Security", "Performance"],
+      "description": "Onboard 100 new customers without impacting existing customers"
+    },
+    {
+      "scenario": "Custom Integration",
+      "characteristics": ["Extensibility", "Interoperability", "Usability"],
+      "description": "Customer builds custom data connector in < 2 hours"
+    },
+    {
+      "scenario": "Feature Deployment",
+      "characteristics": ["Deployability", "Configurability", "Testability"],
+      "description": "Deploy new feature to 10% of customers (canary), gradually increase"
+    },
+    {
+      "scenario": "Data Pipeline Failure",
+      "characteristics": ["Fault Tolerance", "Recoverability", "Reliability"],
+      "description": "Handle data source outage without affecting other tenants"
+    }
+  ],
+  "saasSpecificConcerns": {
+    "multiTenancy": {
+      "isolationModel": "Database per tenant (metadata) + shared Clickhouse with tenant filtering",
+      "resourceAllocation": "CPU/memory limits per tenant to prevent noisy neighbors",
+      "billing": "Usage-based metering for compute and storage"
+    },
+    "customization": {
+      "whiteLabeling": "Custom domain, logo, colors per tenant",
+      "dashboards": "Tenant-specific dashboard templates and widgets",
+      "dataSources": "Custom connectors and ETL pipelines"
+    },
+    "billing": {
+      "model": "Subscription tiers + usage-based metering",
+      "metrics": ["Active users", "Data volume", "Query count", "API calls"],
+      "churnPrevention": "Monitor usage patterns, proactive engagement"
+    },
+    "customerSuccess": {
+      "onboarding": "Self-service onboarding + white-glove for enterprise",
+      "support": "Tiered support (Basic, Premium, Enterprise)",
+      "documentation": "Interactive tutorials, API docs, video guides"
+    }
+  },
+  "competitiveDifferentiators": {
+    "performance": "Sub-second query response on billion-row datasets",
+    "easOfUse": "No SQL required - visual query builder",
+    "integrations": "100+ pre-built data connectors",
+    "pricing": "Transparent, predictable pricing",
+    "customization": "Highly customizable dashboards and workflows"
+  }
+}

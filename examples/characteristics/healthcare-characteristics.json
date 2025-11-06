@@ -1,0 +1,249 @@
+{
+  "projectName": "Healthcare Patient Portal",
+  "domain": "Healthcare",
+  "description": "HIPAA-compliant patient portal for managing health records, appointments, and telemedicine",
+  "characteristics": [
+    {
+      "name": "Availability",
+      "importance": 9,
+      "target": 99.95,
+      "targetDescription": "99.95% uptime (22 minutes downtime/month max)",
+      "reason": "Healthcare access is critical - patients need 24/7 access to records",
+      "measurements": [
+        "Monthly uptime percentage",
+        "Service availability by criticality tier",
+        "Scheduled maintenance windows"
+      ]
+    },
+    {
+      "name": "Performance",
+      "importance": 7,
+      "target": "95th percentile < 500ms, page load < 3 seconds",
+      "targetDescription": "Responsive interface for healthcare providers and patients",
+      "reason": "Provider efficiency requires fast system response",
+      "measurements": [
+        "API response times",
+        "Database query performance",
+        "Page load time",
+        "Report generation time"
+      ]
+    },
+    {
+      "name": "Scalability",
+      "importance": 6,
+      "target": "Support 500K patients, 50K concurrent users",
+      "targetDescription": "Scale to accommodate growing patient population",
+      "reason": "Hospital network expansion adds 10K patients quarterly",
+      "measurements": [
+        "Patient record storage capacity",
+        "Concurrent user capacity",
+        "Data volume growth rate",
+        "Search index performance"
+      ]
+    },
+    {
+      "name": "Security",
+      "importance": 10,
+      "target": "HIPAA Technical Safeguards compliance, SOC 2 Type II certified",
+      "targetDescription": "Full PHI encryption, audit logging, access controls, MFA required",
+      "reason": "HIPAA violations: $100-$50,000 per record, up to $1.5M annually",
+      "measurements": [
+        "HIPAA compliance audit score",
+        "Security vulnerability count",
+        "Penetration test results",
+        "Access control violations"
+      ]
+    },
+    {
+      "name": "Reliability",
+      "importance": 9,
+      "target": "Error rate < 0.01%, data integrity 100%",
+      "targetDescription": "Zero medical record corruption, accurate data always",
+      "reason": "Medical record errors can be life-threatening",
+      "measurements": [
+        "Data integrity validation results",
+        "Transaction success rate",
+        "Error rate by service",
+        "Data consistency checks"
+      ]
+    },
+    {
+      "name": "Fault Tolerance",
+      "importance": 8,
+      "target": "Multi-region failover, no single points of failure",
+      "targetDescription": "Automatic failover to backup region within 60 seconds",
+      "reason": "Healthcare cannot afford extended outages",
+      "measurements": [
+        "Failover success rate",
+        "Recovery time objective (RTO)",
+        "Circuit breaker effectiveness",
+        "Redundancy verification"
+      ]
+    },
+    {
+      "name": "Recoverability",
+      "importance": 9,
+      "target": "RTO < 30 minutes, RPO < 1 minute",
+      "targetDescription": "Continuous data replication, point-in-time recovery",
+      "reason": "Patient care cannot wait - fast recovery is critical",
+      "measurements": [
+        "Backup frequency (continuous)",
+        "Restore time testing",
+        "Data replication lag",
+        "Disaster recovery drill results"
+      ]
+    },
+    {
+      "name": "Maintainability",
+      "importance": 6,
+      "target": "Code quality > 85%, comprehensive documentation",
+      "targetDescription": "Well-documented, modular codebase for regulated environment",
+      "reason": "Regulatory audits require clear documentation and traceability",
+      "measurements": [
+        "Code quality metrics",
+        "Documentation coverage",
+        "Technical debt ratio",
+        "Change request turnaround time"
+      ]
+    },
+    {
+      "name": "Testability",
+      "importance": 8,
+      "target": "90% code coverage, automated compliance testing",
+      "targetDescription": "Comprehensive testing including HIPAA compliance validation",
+      "reason": "Medical software requires rigorous testing to prevent errors",
+      "measurements": [
+        "Unit test coverage",
+        "Integration test coverage",
+        "Compliance test coverage",
+        "Test automation percentage"
+      ]
+    },
+    {
+      "name": "Deployability",
+      "importance": 5,
+      "target": "Monthly releases, strict change control",
+      "targetDescription": "Controlled deployments with validation periods",
+      "reason": "Regulatory compliance requires controlled change management",
+      "measurements": [
+        "Deployment success rate",
+        "Rollback frequency",
+        "Change approval time",
+        "Deployment window adherence"
+      ]
+    },
+    {
+      "name": "Configurability",
+      "importance": 7,
+      "target": "Multi-tenant configuration, role-based access",
+      "targetDescription": "Configure per hospital, department, and role without code changes",
+      "reason": "Different hospitals have different workflows and requirements",
+      "measurements": [
+        "Configuration change time",
+        "Tenant-specific customizations",
+        "Role configuration coverage",
+        "Environment parity"
+      ]
+    },
+    {
+      "name": "Extensibility",
+      "importance": 6,
+      "target": "HL7 FHIR API, plugin architecture for integrations",
+      "targetDescription": "Integrate with EHR systems (Epic, Cerner), lab systems, pharmacies",
+      "reason": "Healthcare requires integration with existing hospital systems",
+      "measurements": [
+        "Integration development time",
+        "FHIR compliance score",
+        "Supported EHR systems count",
+        "API versioning adherence"
+      ]
+    },
+    {
+      "name": "Interoperability",
+      "importance": 9,
+      "target": "HL7 FHIR R4 compliance, IHE profiles support",
+      "targetDescription": "Seamless data exchange with hospital systems and health information exchanges",
+      "reason": "Healthcare requires standardized data exchange for coordinated care",
+      "measurements": [
+        "FHIR compliance test results",
+        "HL7 message processing success rate",
+        "Integration success rate",
+        "Data format standards adherence"
+      ]
+    },
+    {
+      "name": "Usability",
+      "importance": 8,
+      "target": "WCAG 2.1 AA compliance, accessibility for all ages",
+      "targetDescription": "Accessible to elderly patients, multiple languages, intuitive for non-technical users",
+      "reason": "Diverse patient population requires inclusive design",
+      "measurements": [
+        "Accessibility audit score (WCAG)",
+        "User satisfaction (Net Promoter Score)",
+        "Task completion rate",
+        "Support ticket volume"
+      ]
+    }
+  ],
+  "businessContext": {
+    "industry": "Healthcare / Medical",
+    "userBase": "500,000 patients, 5,000 providers",
+    "transactionVolume": "100,000 portal visits/day",
+    "geographicScope": "United States (multi-state hospital network)",
+    "regulatoryRequirements": [
+      "HIPAA (Health Insurance Portability and Accountability Act)",
+      "HITECH (Health Information Technology for Economic and Clinical Health Act)",
+      "SOC 2 Type II",
+      "21 CFR Part 11 (FDA)",
+      "State-specific privacy laws"
+    ]
+  },
+  "technicalConstraints": {
+    "cloudProvider": "AWS (GovCloud for highest security)",
+    "budget": "$75K/month infrastructure + compliance",
+    "team": "20 engineers, 2 compliance specialists",
+    "deploymentFrequency": "Monthly (with emergency patches as needed)",
+    "existingTech": ["Java", "Angular", "Oracle Database", "HL7 FHIR", "MuleSoft"],
+    "certifications": ["HITRUST CSF", "SOC 2 Type II"]
+  },
+  "keyScenarios": [
+    {
+      "scenario": "PHI Access Control",
+      "characteristics": ["Security", "Reliability", "Interoperability"],
+      "description": "Ensure only authorized users access protected health information"
+    },
+    {
+      "scenario": "Audit Logging",
+      "characteristics": ["Security", "Reliability", "Recoverability"],
+      "description": "Comprehensive audit trail for all PHI access (HIPAA requirement)"
+    },
+    {
+      "scenario": "EHR Integration",
+      "characteristics": ["Interoperability", "Reliability", "Security"],
+      "description": "Bidirectional data exchange with Epic and Cerner EHR systems"
+    },
+    {
+      "scenario": "Disaster Recovery",
+      "characteristics": ["Recoverability", "Availability", "Fault Tolerance"],
+      "description": "Recover from catastrophic failure with minimal data loss"
+    },
+    {
+      "scenario": "Telemedicine Session",
+      "characteristics": ["Performance", "Availability", "Security"],
+      "description": "Secure, high-quality video consultations with patients"
+    }
+  ],
+  "complianceNotes": {
+    "hipaa": {
+      "administrative": "Business Associate Agreements, workforce training, contingency planning",
+      "physical": "Facility access controls, workstation security",
+      "technical": "Access controls, audit logging, encryption, transmission security"
+    },
+    "dataClassification": {
+      "PHI": "Protected Health Information - highest security level",
+      "PII": "Personally Identifiable Information - high security",
+      "Clinical": "Clinical data - high security",
+      "Administrative": "Non-sensitive administrative data - standard security"
+    }
+  }
+}

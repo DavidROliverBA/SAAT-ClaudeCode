@@ -1,0 +1,472 @@
+{
+  "projectName": "E-Commerce Platform",
+  "analysisDate": "2025-11-06T20:45:00Z",
+  "saatVersion": "1.0",
+  "threatModelingEnabled": false,
+  "securityScore": 68,
+  "summary": {
+    "critical": 3,
+    "high": 7,
+    "medium": 12,
+    "low": 5,
+    "total": 27
+  },
+  "complianceStatus": {
+    "PCI-DSS": {
+      "score": 65,
+      "status": "non-compliant",
+      "level": "Level 1",
+      "gaps": [
+        "Requirement 2.2: High Availability - Payment service lacks redundancy",
+        "Requirement 4.1: Encryption in Transit - HTTP endpoint found",
+        "Requirement 8.3: Multi-Factor Authentication - MFA not enforced for admin access"
+      ]
+    },
+    "GDPR": {
+      "score": 75,
+      "status": "partial",
+      "gaps": [
+        "Article 17: Right to Erasure - No documented data deletion mechanism",
+        "Article 32: Security of Processing - Missing encryption at rest for some data"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "id": "SEC-001",
+      "severity": "CRITICAL",
+      "category": "Encryption",
+      "cwe": "CWE-319",
+      "title": "Unencrypted HTTP Endpoint Detected",
+      "description": "API Gateway and Payment Service have HTTP endpoints exposed. Sensitive payment data transmitted over unencrypted channel",
+      "affectedElements": ["container-002", "container-004"],
+      "attackScenario": "Attacker performs man-in-the-middle (MITM) attack on network, intercepts HTTP traffic, captures credit card data in plaintext",
+      "impact": {
+        "confidentiality": "HIGH",
+        "integrity": "HIGH",
+        "availability": "LOW",
+        "description": "Payment card data exposure, customer PII breach, regulatory fines"
+      },
+      "cvssScore": 9.1,
+      "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+      "exploitability": "HIGH",
+      "dataExposed": ["Credit card numbers", "CVV codes", "Cardholder names", "Billing addresses"],
+      "compliance": ["PCI-DSS 4.1", "GDPR Article 32"],
+      "remediation": {
+        "priority": "IMMEDIATE",
+        "steps": [
+          "Configure TLS 1.3 on all services",
+          "Obtain SSL/TLS certificates (Let's Encrypt or AWS ACM)",
+          "Redirect all HTTP traffic to HTTPS (301 permanent redirect)",
+          "Implement HSTS (HTTP Strict Transport Security) headers",
+          "Update API Gateway to enforce HTTPS only",
+          "Disable HTTP listeners on load balancers"
+        ],
+        "technologies": ["Let's Encrypt", "AWS ACM", "Nginx/Kong HTTPS config"],
+        "effort": "2-3 days",
+        "cost": "$0-500/year (certificate costs)",
+        "verification": "Run SSL Labs test, verify no HTTP endpoints accessible"
+      }
+    },
+    {
+      "id": "SEC-002",
+      "severity": "CRITICAL",
+      "category": "Access Control",
+      "cwe": "CWE-306",
+      "title": "Admin Endpoints Missing Authentication",
+      "description": "Admin API endpoints (/admin/*) accessible without authentication",
+      "affectedElements": ["container-002"],
+      "attackScenario": "Attacker directly accesses admin endpoints, gains administrative privileges, modifies orders, accesses customer data, or deletes products",
+      "impact": {
+        "confidentiality": "HIGH",
+        "integrity": "HIGH",
+        "availability": "HIGH",
+        "description": "Complete system compromise, data breach, financial fraud"
+      },
+      "cvssScore": 9.8,
+      "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+      "exploitability": "VERY_HIGH",
+      "remediation": {
+        "priority": "IMMEDIATE",
+        "steps": [
+          "Implement authentication middleware for /admin/* routes",
+          "Require OAuth 2.0 or JWT tokens",
+          "Enforce role-based access control (RBAC)",
+          "Add IP whitelist for admin access",
+          "Implement multi-factor authentication (MFA)",
+          "Add audit logging for all admin actions"
+        ],
+        "technologies": ["OAuth 2.0", "JWT", "express-jwt", "Auth0/Okta"],
+        "effort": "3-4 days"
+      }
+    },
+    {
+      "id": "SEC-003",
+      "severity": "CRITICAL",
+      "category": "Infrastructure",
+      "cwe": "CWE-284",
+      "title": "Database Publicly Accessible",
+      "description": "PostgreSQL database (container-008) has public internet access enabled. Security group allows connections from 0.0.0.0/0",
+      "affectedElements": ["container-008"],
+      "attackScenario": "Attacker scans for open PostgreSQL ports (5432), attempts brute force or exploits known vulnerabilities, gains database access, exfiltrates all customer data",
+      "impact": {
+        "confidentiality": "CRITICAL",
+        "integrity": "CRITICAL",
+        "availability": "HIGH",
+        "description": "Massive data breach, all customer PII and payment records exposed"
+      },
+      "cvssScore": 9.3,
+      "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+      "exploitability": "HIGH",
+      "dataExposed": ["All user data", "Payment history", "Order records", "Personal information"],
+      "remediation": {
+        "priority": "IMMEDIATE",
+        "steps": [
+          "Move database to private subnet (no internet gateway route)",
+          "Update security group to allow connections only from application security group",
+          "Remove public IP address from database instance",
+          "Implement bastion host for admin access",
+          "Enable VPC flow logs for monitoring",
+          "Verify no public accessibility with AWS Reachability Analyzer"
+        ],
+        "technologies": ["AWS VPC", "Security Groups", "Bastion Host"],
+        "effort": "1 day"
+      }
+    },
+    {
+      "id": "SEC-004",
+      "severity": "HIGH",
+      "category": "Input Validation",
+      "cwe": "CWE-89",
+      "title": "SQL Injection Vulnerability Risk",
+      "description": "Potential SQL injection vulnerabilities detected. String concatenation used in database queries instead of parameterized queries",
+      "affectedElements": ["container-003", "container-005", "container-006"],
+      "attackScenario": "Attacker crafts malicious input (e.g., ' OR '1'='1), injects SQL code into query, bypasses authentication, or extracts sensitive data",
+      "impact": {
+        "confidentiality": "HIGH",
+        "integrity": "HIGH",
+        "availability": "MEDIUM",
+        "description": "Unauthorized data access, data manipulation, potential data deletion"
+      },
+      "cvssScore": 8.6,
+      "cvssVector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+      "remediation": {
+        "priority": "HIGH",
+        "steps": [
+          "Use parameterized queries (prepared statements) for all database operations",
+          "Replace string concatenation with ORM query builders",
+          "Implement input validation and sanitization",
+          "Use SQL escaping functions for dynamic values",
+          "Add static analysis tools to CI/CD (e.g., Semgrep, SonarQube)",
+          "Conduct code review for all database queries"
+        ],
+        "technologies": ["TypeORM", "Sequelize", "pg-promise with parameterized queries"],
+        "effort": "5-7 days"
+      }
+    },
+    {
+      "id": "SEC-005",
+      "severity": "HIGH",
+      "category": "Input Validation",
+      "cwe": "CWE-79",
+      "title": "Cross-Site Scripting (XSS) Risk",
+      "description": "User input not sanitized before rendering. Potential stored XSS in product descriptions and reviews",
+      "affectedElements": ["container-001", "container-006"],
+      "attackScenario": "Attacker injects malicious JavaScript in product review, script executes when other users view the product, steals session cookies, performs actions as victim",
+      "impact": {
+        "confidentiality": "MEDIUM",
+        "integrity": "HIGH",
+        "availability": "LOW",
+        "description": "Session hijacking, credential theft, malware distribution"
+      },
+      "cvssScore": 7.4,
+      "remediation": {
+        "priority": "HIGH",
+        "steps": [
+          "Implement Content Security Policy (CSP) headers",
+          "Sanitize all user input server-side (DOMPurify, sanitize-html)",
+          "Use HTML escaping for all dynamic content",
+          "Validate input on client and server side",
+          "Set HttpOnly and Secure flags on cookies"
+        ],
+        "effort": "4-5 days"
+      }
+    },
+    {
+      "id": "SEC-006",
+      "severity": "HIGH",
+      "category": "Authentication",
+      "cwe": "CWE-521",
+      "title": "Weak Password Policy",
+      "description": "Password policy allows weak passwords (min 6 characters, no complexity requirements)",
+      "affectedElements": ["container-003"],
+      "remediation": {
+        "priority": "HIGH",
+        "steps": [
+          "Enforce minimum 12 character passwords",
+          "Require mix of uppercase, lowercase, numbers, special characters",
+          "Implement password strength meter",
+          "Check against common password databases (Have I Been Pwned API)",
+          "Enforce password rotation (90 days for admin accounts)"
+        ],
+        "effort": "2-3 days"
+      }
+    },
+    {
+      "id": "SEC-007",
+      "severity": "HIGH",
+      "category": "Authentication",
+      "cwe": "CWE-307",
+      "title": "No Rate Limiting on Login Endpoint",
+      "description": "Login endpoint (/auth/login) has no rate limiting. Vulnerable to brute force attacks",
+      "affectedElements": ["container-003"],
+      "attackScenario": "Attacker uses automated tools to try thousands of password combinations, eventually gains access to user accounts",
+      "remediation": {
+        "priority": "HIGH",
+        "steps": [
+          "Implement rate limiting: 5 attempts per 15 minutes per IP",
+          "Add exponential backoff after failed attempts",
+          "Implement CAPTCHA after 3 failed attempts",
+          "Add account lockout after 10 failed attempts (30 minute duration)",
+          "Alert security team on suspicious login patterns"
+        ],
+        "technologies": ["express-rate-limit", "Redis", "reCAPTCHA"],
+        "effort": "2-3 days"
+      }
+    },
+    {
+      "id": "SEC-008",
+      "severity": "HIGH",
+      "category": "Data Protection",
+      "cwe": "CWE-311",
+      "title": "Sensitive Data in Application Logs",
+      "description": "Credit card numbers, CVV codes, and passwords logged in application logs",
+      "affectedElements": ["container-004"],
+      "attackScenario": "Attacker gains access to log files (via compromised server or log aggregation system), extracts sensitive data",
+      "impact": {
+        "confidentiality": "CRITICAL",
+        "description": "PCI-DSS violation, customer data exposure"
+      },
+      "compliance": ["PCI-DSS 3.4"],
+      "remediation": {
+        "priority": "HIGH",
+        "steps": [
+          "Implement log sanitization to redact sensitive data",
+          "Remove credit card numbers, CVV, passwords from logs",
+          "Use masking for PII (show last 4 digits only)",
+          "Add log review to code review process",
+          "Encrypt log files at rest",
+          "Implement log retention policy (90 days, secure deletion)"
+        ],
+        "effort": "3-4 days"
+      }
+    },
+    {
+      "id": "SEC-009",
+      "severity": "HIGH",
+      "category": "Session Management",
+      "cwe": "CWE-613",
+      "title": "Long Session Timeout",
+      "description": "User sessions remain valid for 7 days. Increases risk from session hijacking",
+      "affectedElements": ["container-003", "container-009"],
+      "remediation": {
+        "priority": "MEDIUM",
+        "steps": [
+          "Reduce session timeout to 30 minutes for regular users",
+          "Reduce to 15 minutes for admin sessions",
+          "Implement \"Remember Me\" as separate token (with limited permissions)",
+          "Add session invalidation on logout",
+          "Implement concurrent session detection"
+        ],
+        "effort": "2 days"
+      }
+    },
+    {
+      "id": "SEC-010",
+      "severity": "MEDIUM",
+      "category": "Infrastructure",
+      "cwe": "CWE-16",
+      "title": "Missing Web Application Firewall (WAF)",
+      "description": "No WAF configured to protect against common web attacks (OWASP Top 10)",
+      "affectedElements": ["container-002"],
+      "remediation": {
+        "priority": "MEDIUM",
+        "steps": [
+          "Deploy AWS WAF or CloudFlare WAF",
+          "Enable OWASP Top 10 rule set",
+          "Configure rate limiting rules",
+          "Add geo-blocking for high-risk countries (if applicable)",
+          "Enable bot detection and mitigation"
+        ],
+        "technologies": ["AWS WAF", "CloudFlare"],
+        "effort": "2-3 days",
+        "cost": "$5-50/month"
+      }
+    },
+    {
+      "id": "SEC-011",
+      "severity": "MEDIUM",
+      "category": "Monitoring",
+      "cwe": "CWE-778",
+      "title": "Insufficient Security Logging",
+      "description": "Missing logs for security events: failed login attempts, authorization failures, admin actions",
+      "remediation": {
+        "priority": "MEDIUM",
+        "steps": [
+          "Log all authentication events (success, failure, MFA)",
+          "Log all authorization failures",
+          "Log all admin actions with user identity",
+          "Implement centralized log aggregation (ELK, Splunk)",
+          "Set up alerts for suspicious patterns",
+          "Retain security logs for 1 year (compliance requirement)"
+        ],
+        "effort": "4-5 days"
+      }
+    }
+  ],
+  "attackSurface": {
+    "externalEndpoints": [
+      {
+        "endpoint": "https://api.example.com/*",
+        "container": "container-002",
+        "authentication": "JWT",
+        "rateLimit": false,
+        "waf": false,
+        "risk": "MEDIUM"
+      },
+      {
+        "endpoint": "http://api.example.com/admin/*",
+        "container": "container-002",
+        "authentication": false,
+        "rateLimit": false,
+        "waf": false,
+        "risk": "CRITICAL"
+      }
+    ],
+    "publicServices": ["container-001", "container-002"],
+    "exposedPorts": [80, 443, 5432],
+    "thirdPartyIntegrations": [
+      {
+        "service": "Stripe",
+        "purpose": "Payment processing",
+        "dataShared": ["Payment card tokens", "Transaction amounts"],
+        "securityControls": ["API keys", "Webhook signature verification"]
+      },
+      {
+        "service": "SendGrid",
+        "purpose": "Email delivery",
+        "dataShared": ["Email addresses", "User names"],
+        "securityControls": ["API keys"]
+      }
+    ]
+  },
+  "encryptionStatus": {
+    "inTransit": {
+      "status": "PARTIAL",
+      "issues": [
+        "HTTP endpoints detected (container-002, container-004)",
+        "No TLS configured for internal service-to-service communication"
+      ],
+      "compliant": ["External API uses HTTPS", "Database connections encrypted"]
+    },
+    "atRest": {
+      "status": "PARTIAL",
+      "issues": [
+        "Database encryption not enabled",
+        "Redis cache not encrypted",
+        "S3 buckets missing encryption"
+      ],
+      "compliant": ["Application secrets stored in AWS Secrets Manager"]
+    }
+  },
+  "authenticationStatus": {
+    "userAuth": {
+      "method": "JWT",
+      "strengths": ["Token-based", "Stateless"],
+      "weaknesses": ["Long expiration (7 days)", "No refresh token rotation"]
+    },
+    "serviceAuth": {
+      "method": "NONE",
+      "issue": "No service-to-service authentication (mTLS not implemented)"
+    },
+    "mfa": {
+      "enabled": false,
+      "recommendation": "Implement MFA for all admin accounts, optional for users"
+    }
+  },
+  "recommendations": [
+    {
+      "priority": 1,
+      "title": "Enable HTTPS/TLS for All Services",
+      "rationale": "Eliminate critical encryption vulnerability",
+      "effort": "2-3 days",
+      "impact": "Protects payment data in transit, achieves PCI-DSS compliance",
+      "addresses": ["SEC-001"]
+    },
+    {
+      "priority": 2,
+      "title": "Remove Public Database Access",
+      "rationale": "Eliminate critical infrastructure vulnerability",
+      "effort": "1 day",
+      "impact": "Prevents direct database attacks, protects all customer data",
+      "addresses": ["SEC-003"]
+    },
+    {
+      "priority": 3,
+      "title": "Add Authentication to Admin Endpoints",
+      "rationale": "Prevent unauthorized administrative access",
+      "effort": "3-4 days",
+      "impact": "Prevents complete system compromise",
+      "addresses": ["SEC-002"]
+    },
+    {
+      "priority": 4,
+      "title": "Implement SQL Injection Prevention",
+      "rationale": "Prevent database attacks",
+      "effort": "5-7 days",
+      "impact": "Protects data integrity and confidentiality",
+      "addresses": ["SEC-004"]
+    },
+    {
+      "priority": 5,
+      "title": "Add XSS Protection",
+      "rationale": "Prevent client-side attacks",
+      "effort": "4-5 days",
+      "impact": "Protects user sessions and credentials",
+      "addresses": ["SEC-005"]
+    }
+  ],
+  "securityControls": {
+    "implemented": [
+      "Password hashing (bcrypt)",
+      "HTTPS on some endpoints",
+      "API authentication (JWT)",
+      "Secrets management (AWS Secrets Manager)"
+    ],
+    "missing": [
+      "Rate limiting",
+      "Web Application Firewall (WAF)",
+      "Intrusion Detection System (IDS)",
+      "Data Loss Prevention (DLP)",
+      "Multi-Factor Authentication (MFA)",
+      "Security Information and Event Management (SIEM)"
+    ]
+  },
+  "nextSteps": {
+    "immediate": [
+      "Fix CRITICAL issues: HTTPS, database access, admin auth (1-2 weeks)",
+      "PCI-DSS remediation plan"
+    ],
+    "shortTerm": [
+      "Fix HIGH issues: SQL injection, XSS, rate limiting (2-4 weeks)",
+      "Deploy WAF",
+      "Implement comprehensive security logging"
+    ],
+    "longTerm": [
+      "Security training for development team",
+      "Regular penetration testing (quarterly)",
+      "Bug bounty program",
+      "Threat modeling workshops"
+    ]
+  }
+}
