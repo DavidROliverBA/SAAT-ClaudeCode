@@ -1,6 +1,6 @@
 # SAAT Claude Code Sub-Agents
 
-**Software Architecture Analysis Toolkit for Claude Code**
+**Solution Architects Analysis Toolkit for Claude Code**
 
 A comprehensive suite of 11 specialized AI sub-agents that provide professional-grade software architecture analysis, design, validation, security assessment, documentation, and infrastructure generation.
 
@@ -11,7 +11,7 @@ A comprehensive suite of 11 specialized AI sub-agents that provide professional-
 
 ## 🎯 What is SAAT?
 
-SAAT (Software Architecture Analysis Toolkit) provides AI-powered architecture analysis through specialized sub-agents that can:
+SAAT (Solution Architects Analysis Toolkit) provides AI-powered architecture analysis through specialized sub-agents that can:
 
 - 🔍 **Discover** existing codebases and identify architecture patterns
 - 📋 **Extract** requirements from business documents
@@ -462,7 +462,7 @@ MIT License - see [LICENSE](./LICENSE) file for details.
 
 **Created by**: David R. Oliver
 
-**Based on**: Software Architecture Analysis Toolkit (SAAT) methodology
+**Based on**: Solution Architects Analysis Toolkit (SAAT) methodology
 
 **Powered by**: Claude Code by Anthropic
 

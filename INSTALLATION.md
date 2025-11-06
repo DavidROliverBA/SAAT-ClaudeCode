@@ -1,6 +1,6 @@
 # SAAT Claude Code Sub-Agents - Installation Guide
 
-Complete guide for installing SAAT (Software Architecture Analysis Toolkit) sub-agents globally on any laptop.
+Complete guide for installing SAAT (Solution Architects Analysis Toolkit) sub-agents globally on any laptop.
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@ Complete guide for installing SAAT (Software Architecture Analysis Toolkit) sub-
 
 ## Overview
 
-SAAT provides 11 specialized AI sub-agents for comprehensive software architecture analysis:
+SAAT provides 11 specialized AI sub-agents for comprehensive solution architecture analysis:
 
 1. **saat-orchestrate** - AI architecture consultant (start here!)
 2. **saat-discover** - Analyze existing codebases
@@ -527,7 +527,7 @@ See [LICENSE](./LICENSE) file for details.
 
 SAAT Claude Code Sub-Agents created by David R. Oliver
 
-Based on the original SAAT (Software Architecture Analysis Toolkit) methodology.
+Based on the original SAAT (Solution Architects Analysis Toolkit) methodology.
 
 ---
 
